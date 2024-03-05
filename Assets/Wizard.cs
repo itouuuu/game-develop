@@ -4,25 +4,32 @@ using UnityEngine;
 
 public class Wizard : WizardParameter
 {
-    private CharacterController playerController;
-    private Vector3 moveVelocity;
+    private Rigidbody charactorRB;
     void Start()
     {
-        playerController = this.GetComponent<CharacterController>();
+        charactorRB = this.GetComponent<Rigidbody>();
     }
 
     void Update()
-    {
-        moveVelocity = MoveTank();
-        ShotShell(this.transform.position);
-        SetLandmine(this.transform.position);
-        transform.LookAt(Input.mousePosition);
-    }
-
-    void FixedUpdate() {
+    {   
         //自身のオブジェクトのみ移動させる
         if(photonView.IsMine == true){
-	        playerController.Move(moveVelocity * Time.deltaTime);
+            //魔法弾の発射
+            ShotMagicAttack(this.transform.position);
+            //罠の設置
+            SetMagicTrap(this.transform.position);
+            charactorRB.velocity = MoveTank() * Time.deltaTime * 100.0f;
+	        //this.transform.position += (moveVelocity * Time.deltaTime);
+            //マウスカーソルの方に常に体を向ける
+            transform.LookAt(MouseCursortoPlanePosition());
         }
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.name == "MagicAttack(Clone)") {
+            //魔法弾と衝突したら被弾判定を行う。
+             OnPlayerDameged();
+        } 
     }
 }
