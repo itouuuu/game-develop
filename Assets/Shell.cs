@@ -20,8 +20,8 @@ public class Shell : MonoBehaviour
     {
         this.transform.position += (normShellVelocity * magicAttackSpeed * Time.deltaTime);
     }
-
-/*
+    
+    /*
     void OnTriggerEnter(Collider other)
     {
         
@@ -33,7 +33,8 @@ public class Shell : MonoBehaviour
             //壁と衝突したらisTriggerをオフにする(接触面の法線ベクトル検出のため)。
             //this.GetComponent<Collider>().isTrigger = false;
         }
-    }*/
+    }
+    */
 
     void OnCollisionEnter(Collision other)
     {
