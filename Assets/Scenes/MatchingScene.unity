@@ -832,6 +832,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 783183293074861257, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
   m_PrefabInstance: {fileID: 6375505404694042524}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &251046836 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1759004616518250096, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
+  m_PrefabInstance: {fileID: 6375505404694042524}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 960b9eb790467b348993350df527b788, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &272643297
 GameObject:
   m_ObjectHideFlags: 0
@@ -2892,6 +2903,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates: []
+--- !u!114 &667806309 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6067393121621211396, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
+  m_PrefabInstance: {fileID: 6375505404694042524}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &670086801
 GameObject:
   m_ObjectHideFlags: 0
@@ -4598,6 +4620,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 884502798}
   m_CullTransparentMesh: 1
+--- !u!114 &885159083 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9173992457046619339, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
+  m_PrefabInstance: {fileID: 6375505404694042524}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &890307303
 GameObject:
   m_ObjectHideFlags: 0
@@ -5465,6 +5498,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1006760810}
   m_CullTransparentMesh: 1
+--- !u!114 &1007718405 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2469553082899713003, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
+  m_PrefabInstance: {fileID: 6375505404694042524}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1015904917
 GameObject:
   m_ObjectHideFlags: 0
@@ -9542,6 +9586,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1985645407}
   m_CullTransparentMesh: 1
+--- !u!114 &2007379480 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3937990738036669898, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
+  m_PrefabInstance: {fileID: 6375505404694042524}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2032646300
 GameObject:
   m_ObjectHideFlags: 0
@@ -10132,6 +10187,26 @@ PrefabInstance:
       propertyPath: RoomName
       value: nyaa~
       objectReference: {fileID: 0}
+    - target: {fileID: 5691464672358726710, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
+      propertyPath: _ownerTextMesh
+      value: 
+      objectReference: {fileID: 2007379480}
+    - target: {fileID: 5691464672358726710, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
+      propertyPath: _dispDescription
+      value: 
+      objectReference: {fileID: 251046836}
+    - target: {fileID: 5691464672358726710, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
+      propertyPath: _roomNameTextMesh
+      value: 
+      objectReference: {fileID: 667806309}
+    - target: {fileID: 5691464672358726710, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
+      propertyPath: _CurMemberNumTextMesh
+      value: 
+      objectReference: {fileID: 885159083}
+    - target: {fileID: 5691464672358726710, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
+      propertyPath: _isSetKeywordTextMesh
+      value: 
+      objectReference: {fileID: 1007718405}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
