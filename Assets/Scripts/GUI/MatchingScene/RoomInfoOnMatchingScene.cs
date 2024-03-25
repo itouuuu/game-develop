@@ -1,7 +1,9 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RoomInfoOnMatchingScene : MonoBehaviour
 {
@@ -14,11 +16,13 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _ownerTextMesh;
     [SerializeField] private TextMeshProUGUI _isSetKeywordTextMesh;
     [SerializeField] private TextMeshProUGUI _CurMemberNumTextMesh;
+    public Button button;
 
     [SerializeField]private DispDescriptionOnHover _dispDescription;
     // Start is called before the first frame update
     void Start()
     {
+
         if (!_dispDescription) 
         {
             GameObject descriptionObj=GameObject.Find("Description");
@@ -27,6 +31,7 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
                 _dispDescription = descriptionObj.GetComponent<DispDescriptionOnHover>();
             }
         }
+        button.onClick.AddListener(OnClicked);
         ResetTextMeshsText();
 
         
@@ -41,6 +46,7 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
 
     private void Reset()
     {
+        button=GetComponent<Button>();
         _dispDescription = GetComponent<DispDescriptionOnHover>();
         Transform temp = this.transform.Find("RoomName");
         _roomNameTextMesh=temp.GetComponent<TextMeshProUGUI>();
@@ -70,5 +76,10 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
         _isSetKeywordTextMesh.text = IsSetKeyword ? "あり" :"無し";
         _CurMemberNumTextMesh.text =$"{CurMemberNum}/4";
         _dispDescription.DispMessage = $"部屋「{RoomName}」に参加する(残り2名)";
+    }
+
+    public void OnClicked() 
+    {
+        PhotonNetwork.JoinRoom(RoomName);
     }
 }

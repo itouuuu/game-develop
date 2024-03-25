@@ -176,6 +176,7 @@ MonoBehaviour:
   _ownerTextMesh: {fileID: 3937990738036669898}
   _isSetKeywordTextMesh: {fileID: 2469553082899713003}
   _CurMemberNumTextMesh: {fileID: 9173992457046619339}
+  button: {fileID: 5758068711855551776}
   _dispDescription: {fileID: 1759004616518250096}
 --- !u!1 &3799548106843639571
 GameObject:
