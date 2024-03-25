@@ -21,7 +21,10 @@ public class DispDescriptionOnHover : MonoBehaviour
         if (!_messageStackDescription) 
         {
             GameObject temp = GameObject.Find("Description");
-            _messageStackDescription=temp.GetComponent<MessageStackDescription>();
+            if (temp) 
+            {
+                _messageStackDescription = temp.GetComponent<MessageStackDescription>();
+            }
         }
         _eventTrigger.AddOnPointerEnter(OnPointerEnter);
         _eventTrigger.AddOnPointerExit(OnPointerExit);

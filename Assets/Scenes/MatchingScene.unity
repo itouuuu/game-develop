@@ -2572,6 +2572,7 @@ GameObject:
   - component: {fileID: 553784103}
   - component: {fileID: 553784105}
   - component: {fileID: 553784104}
+  - component: {fileID: 553784106}
   m_Layer: 5
   m_Name: LoadingOverlay
   m_TagString: Untagged
@@ -2638,6 +2639,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 553784102}
   m_CullTransparentMesh: 1
+--- !u!114 &553784106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 553784102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a653647255bc6874e9dd49432d5aff81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  messageTextMesh: {fileID: 591438606}
 --- !u!1 &586292154
 GameObject:
   m_ObjectHideFlags: 0
@@ -7181,9 +7195,9 @@ RectTransform:
   - {fileID: 986297759}
   - {fileID: 131222616}
   - {fileID: 446462091}
-  - {fileID: 553784103}
   - {fileID: 640964777}
   - {fileID: 1682615610}
+  - {fileID: 553784103}
   - {fileID: 421181768}
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -10839,6 +10853,10 @@ PrefabInstance:
       value: RoomInfo
       objectReference: {fileID: 0}
     - target: {fileID: 5691464672358726710, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
+      propertyPath: button
+      value: 
+      objectReference: {fileID: 6375505404694042525}
+    - target: {fileID: 5691464672358726710, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
       propertyPath: RoomName
       value: nyaa~
       objectReference: {fileID: 0}
@@ -10867,3 +10885,14 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
+--- !u!114 &6375505404694042525 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5758068711855551776, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
+  m_PrefabInstance: {fileID: 6375505404694042524}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
