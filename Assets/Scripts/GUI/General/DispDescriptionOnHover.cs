@@ -6,9 +6,10 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(EventTrigger))]
 public class DispDescriptionOnHover : MonoBehaviour
 {
+   
     [SerializeField] private MessageStackDescription _messageStackDescription;
-    //[SerializeField] private VSModeLobbyUI _lobbyUI;
-    [SerializeField] private EventTrigger _eventTrigger;
+   //[SerializeField] private VSModeLobbyUI _lobbyUI;
+   [SerializeField] private EventTrigger _eventTrigger;
     //[SerializeField, TextArea(1, 5)] public string _dispMessage= "‚ ‚¢‚¤‚¦‚¨abcdeABCDE";
     [SerializeField, TextArea(1, 5)] public string DispMessage = "‚ ‚¢‚¤‚¦‚¨abcdeABCDE";
 
@@ -17,6 +18,11 @@ public class DispDescriptionOnHover : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (!_messageStackDescription) 
+        {
+            GameObject temp = GameObject.Find("Description");
+            _messageStackDescription=temp.GetComponent<MessageStackDescription>();
+        }
         _eventTrigger.AddOnPointerEnter(OnPointerEnter);
         _eventTrigger.AddOnPointerExit(OnPointerExit);
     }

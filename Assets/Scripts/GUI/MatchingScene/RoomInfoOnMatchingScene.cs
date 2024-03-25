@@ -19,6 +19,14 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (!_dispDescription) 
+        {
+            GameObject descriptionObj=GameObject.Find("Description");
+            if (descriptionObj) 
+            {
+                _dispDescription = descriptionObj.GetComponent<DispDescriptionOnHover>();
+            }
+        }
         ResetTextMeshsText();
 
         
