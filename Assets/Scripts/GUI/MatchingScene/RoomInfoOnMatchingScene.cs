@@ -12,23 +12,28 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
     public bool IsSetKeyword;
     public int CurMemberNum;
     //以下4つが、上4つの変数に対応するテキストを表示する
-    [SerializeField] private TextMeshProUGUI _roomNameTextMesh;
-    [SerializeField] private TextMeshProUGUI _ownerTextMesh;
-    [SerializeField] private TextMeshProUGUI _isSetKeywordTextMesh;
-    [SerializeField] private TextMeshProUGUI _CurMemberNumTextMesh;
+    public TextMeshProUGUI roomNameTextMesh;
+    public TextMeshProUGUI ownerTextMesh;
+    public TextMeshProUGUI isSetKeywordTextMesh;
+    public TextMeshProUGUI curMemberNumTextMesh;
     public Button button;
 
-    [SerializeField]private DispDescriptionOnHover _dispDescription;
+    public DispDescriptionOnHover dispDescription;
+    public GameObject waitingMatchingOverlayObj;
+    
     // Start is called before the first frame update
     void Start()
     {
-
-        if (!_dispDescription) 
+        if (!waitingMatchingOverlayObj) 
+        {
+            waitingMatchingOverlayObj = GameObject.Find("WaitingOverlay");
+        }
+        if (!dispDescription) 
         {
             GameObject descriptionObj=GameObject.Find("Description");
             if (descriptionObj) 
             {
-                _dispDescription = descriptionObj.GetComponent<DispDescriptionOnHover>();
+                dispDescription = descriptionObj.GetComponent<DispDescriptionOnHover>();
             }
         }
         button.onClick.AddListener(OnClicked);
@@ -47,15 +52,15 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
     private void Reset()
     {
         button=GetComponent<Button>();
-        _dispDescription = GetComponent<DispDescriptionOnHover>();
+        dispDescription = GetComponent<DispDescriptionOnHover>();
         Transform temp = this.transform.Find("RoomName");
-        _roomNameTextMesh=temp.GetComponent<TextMeshProUGUI>();
+        roomNameTextMesh=temp.GetComponent<TextMeshProUGUI>();
         temp = this.transform.Find("RoomOwner");
-        _ownerTextMesh =temp.GetComponent<TextMeshProUGUI>();
+        ownerTextMesh =temp.GetComponent<TextMeshProUGUI>();
         temp = this.transform.Find("KeywordExistence");
-        _isSetKeywordTextMesh = temp.GetComponent<TextMeshProUGUI>();
+        isSetKeywordTextMesh = temp.GetComponent<TextMeshProUGUI>();
         temp = this.transform.Find("MemberNum");
-        _CurMemberNumTextMesh = temp.GetComponent<TextMeshProUGUI>();
+        curMemberNumTextMesh = temp.GetComponent<TextMeshProUGUI>();
 
     }
 
@@ -71,15 +76,16 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
     //実際に表示される情報を、現在のRoomInfo/OwnerID/IsSetKeyword/CurMemberNumの値に合わせて変更する。
     public void ResetTextMeshsText() 
     {
-        _roomNameTextMesh.text = RoomName;
-        _ownerTextMesh.text = $"{OwnerID}";
-        _isSetKeywordTextMesh.text = IsSetKeyword ? "あり" :"無し";
-        _CurMemberNumTextMesh.text =$"{CurMemberNum}/4";
-        _dispDescription.DispMessage = $"部屋「{RoomName}」に参加する(残り2名)";
+        roomNameTextMesh.text = RoomName;
+        ownerTextMesh.text = $"{OwnerID}";
+        isSetKeywordTextMesh.text = IsSetKeyword ? "あり" :"無し";
+        curMemberNumTextMesh.text =$"{CurMemberNum}/4";
+        dispDescription.DispMessage = $"部屋「{RoomName}」に参加する(残り2名)";
     }
 
     public void OnClicked() 
     {
         PhotonNetwork.JoinRoom(RoomName);
+        waitingMatchingOverlayObj.SetActive(true);
     }
 }

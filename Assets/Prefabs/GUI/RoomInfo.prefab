@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960b9eb790467b348993350df527b788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _messageStackDescription: {fileID: 0}
+  messageStackDescription: {fileID: 0}
   _eventTrigger: {fileID: 7649768537166073780}
   DispMessage: "\u90E8\u5C4B\u300C\u6557\u5317\u3092\u77E5\u308A\u305F\u3044\u300D\u306B\u53C2\u52A0\u3059\u308B(\u6B8B\u308A2\u540D)"
 --- !u!114 &5691464672358726710
@@ -172,12 +172,13 @@ MonoBehaviour:
   OwnerID: 0
   IsSetKeyword: 0
   CurMemberNum: 0
-  _roomNameTextMesh: {fileID: 6067393121621211396}
-  _ownerTextMesh: {fileID: 3937990738036669898}
-  _isSetKeywordTextMesh: {fileID: 2469553082899713003}
-  _CurMemberNumTextMesh: {fileID: 9173992457046619339}
+  roomNameTextMesh: {fileID: 6067393121621211396}
+  ownerTextMesh: {fileID: 3937990738036669898}
+  isSetKeywordTextMesh: {fileID: 2469553082899713003}
+  curMemberNumTextMesh: {fileID: 9173992457046619339}
   button: {fileID: 5758068711855551776}
-  _dispDescription: {fileID: 1759004616518250096}
+  dispDescription: {fileID: 1759004616518250096}
+  waitingMatchingOverlayObj: {fileID: 0}
 --- !u!1 &3799548106843639571
 GameObject:
   m_ObjectHideFlags: 0

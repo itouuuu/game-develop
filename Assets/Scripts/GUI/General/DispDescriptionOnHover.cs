@@ -6,8 +6,9 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(EventTrigger))]
 public class DispDescriptionOnHover : MonoBehaviour
 {
-   
-    [SerializeField] private MessageStackDescription _messageStackDescription;
+
+    [SerializeField] public MessageStackDescription messageStackDescription;
+    
    //[SerializeField] private VSModeLobbyUI _lobbyUI;
    [SerializeField] private EventTrigger _eventTrigger;
     //[SerializeField, TextArea(1, 5)] public string _dispMessage= "‚ ‚¢‚¤‚¦‚¨abcdeABCDE";
@@ -18,15 +19,16 @@ public class DispDescriptionOnHover : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (!_messageStackDescription) 
-        {
-            GameObject temp = GameObject.Find("Description");
-            if (temp) 
+            if (!messageStackDescription)
             {
-                _messageStackDescription = temp.GetComponent<MessageStackDescription>();
+                MessageStackDescription[] comps = FindObjectsByType<MessageStackDescription>(FindObjectsSortMode.None);
+                if (comps.Length > 0)
+                {
+
+                messageStackDescription = comps[0];
+                }
             }
-        }
-        _eventTrigger.AddOnPointerEnter(OnPointerEnter);
+            _eventTrigger.AddOnPointerEnter(OnPointerEnter);
         _eventTrigger.AddOnPointerExit(OnPointerExit);
     }
 
@@ -38,11 +40,11 @@ public class DispDescriptionOnHover : MonoBehaviour
 
     public void OnPointerEnter(BaseEventData baseEventData) 
     {
-        _messageStackDescription.DispNewDescription(this.gameObject, DispMessage);
+        messageStackDescription.DispNewDescription(this.gameObject, DispMessage);
     }
     public void OnPointerExit(BaseEventData baseEventData) 
     {
-        _messageStackDescription.DeleteDescription(this.gameObject);
+        messageStackDescription.DeleteDescription(this.gameObject);
     }
 
 
@@ -60,7 +62,7 @@ public class DispDescriptionOnHover : MonoBehaviour
         GameObject descriptionObj = GameObject.Find("Description");
         if (descriptionObj)
         {
-            _messageStackDescription = descriptionObj.GetComponent<MessageStackDescription>();
+            messageStackDescription = descriptionObj.GetComponent<MessageStackDescription>();
         }
 
         

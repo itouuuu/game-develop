@@ -31,6 +31,10 @@ public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
 
     [SerializeField] private Transform viewportContent;
 
+    public MessageStackDescription messageStackDescription;
+    public GameObject matchingWaitingOverlayObj;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -71,8 +75,11 @@ public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
                 {
                     keyword = (string)aRoomInfo.CustomProperties["Keyword"];
                 }
+                Debug.Log($"{aRoomInfo.Name}7sKeyword:{ keyword}");
                 
                 RoomInfoOnMatchingScene newInfoObj = Instantiate(roomInfoPrefab, viewportContent); //部屋の情報を表示するGameObjectを作成
+                //newInfoObjにシーン内のコンポーネントやGameObjectの参照を渡す
+                newInfoObj.waitingMatchingOverlayObj = matchingWaitingOverlayObj;
                 _roomInfos.Add(new Roominfo(aRoomInfo.Name, aRoomInfo.masterClientId, keyword!="", aRoomInfo.PlayerCount, newInfoObj));//部屋の情報を格納しているリストにその部屋の情報を追加
                 newInfoObj.SetValues(_roomInfos[_roomInfos.Count - 1]);//部屋の情報を表示するGameObjectに、情報を表示する為の情報を渡す
             }
@@ -81,6 +88,7 @@ public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
                 Roominfo temp = _roomInfos[aRoomIndex];
                 temp.CurMemberNum = aRoomInfo.PlayerCount;
                 _roomInfos[aRoomIndex]=temp;//部屋の情報を表示するGameObjectに、情報を表示する為の情報を渡す
+                
             }
         }
 
