@@ -21,7 +21,7 @@ public class DispDescriptionOnHover : MonoBehaviour
     {
             if (!messageStackDescription)
             {
-                MessageStackDescription[] comps = FindObjectsByType<MessageStackDescription>(FindObjectsSortMode.None);
+                MessageStackDescription[] comps = FindObjectsByType<MessageStackDescription>(FindObjectsInactive.Include, FindObjectsSortMode.None);
                 if (comps.Length > 0)
                 {
 
