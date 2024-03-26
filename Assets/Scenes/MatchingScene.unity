@@ -390,7 +390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960b9eb790467b348993350df527b788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _messageStackDescription: {fileID: 640964778}
+  messageStackDescription: {fileID: 640964778}
   _eventTrigger: {fileID: 131222620}
   DispMessage: "\u73FE\u5728\u52DF\u96C6\u4E2D\u306E\u90E8\u5C4B\u3092\u691C\u7D22\u3057\u3001\u53C2\u52A0\u3059\u308B\u90E8\u5C4B\u3092\u9078\u3076\u3002"
 --- !u!114 &131222620
@@ -420,6 +420,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomInfoPrefab: {fileID: 5691464672358726710, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
   viewportContent: {fileID: 307332907}
+  messageStackDescription: {fileID: 640964778}
+  matchingWaitingOverlayObj: {fileID: 553784102}
 --- !u!1 &133991625
 GameObject:
   m_ObjectHideFlags: 0
@@ -506,6 +508,7 @@ GameObject:
   m_Component:
   - component: {fileID: 157154655}
   - component: {fileID: 157154654}
+  - component: {fileID: 157154656}
   m_Layer: 0
   m_Name: GM
   m_TagString: Untagged
@@ -541,6 +544,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &157154656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157154653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0674a98fffe9a934b9633bf4a096007b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &183749205
 GameObject:
   m_ObjectHideFlags: 0
@@ -812,7 +827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960b9eb790467b348993350df527b788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _messageStackDescription: {fileID: 640964778}
+  messageStackDescription: {fileID: 0}
   _eventTrigger: {fileID: 189979120}
   DispMessage: "\u30DE\u30C3\u30C1\u30F3\u30B0\u3092\u958B\u59CB\u3059\u308B\u3002"
 --- !u!114 &189979120
@@ -2574,7 +2589,7 @@ GameObject:
   - component: {fileID: 553784104}
   - component: {fileID: 553784106}
   m_Layer: 5
-  m_Name: LoadingOverlay
+  m_Name: WaitingOverlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2652,6 +2667,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   messageTextMesh: {fileID: 591438606}
+  cancelButton: {fileID: 2032646302}
 --- !u!1 &586292154
 GameObject:
   m_ObjectHideFlags: 0
@@ -2743,7 +2759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960b9eb790467b348993350df527b788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _messageStackDescription: {fileID: 640964778}
+  messageStackDescription: {fileID: 640964778}
   _eventTrigger: {fileID: 586292159}
   DispMessage: "\u540C\u3058\u304F\u30E9\u30F3\u30C0\u30E0\u30DE\u30C3\u30C1\u30F3\u30B0\u3092\u9078\u629E\u3057\u305F\u30D7\u30EC\u30A4\u30E4\u30FC4\u4EBA\u3068\u5BFE\u6226\u3092\u884C\u3046\u3002"
 --- !u!114 &586292159
@@ -3114,7 +3130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960b9eb790467b348993350df527b788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _messageStackDescription: {fileID: 640964778}
+  messageStackDescription: {fileID: 640964778}
   _eventTrigger: {fileID: 658780396}
   DispMessage: "\u4ED6\u306E\u30D7\u30EC\u30A4\u30E4\u30FC\u304C\u90E8\u5C4B\u306B\u53C2\u52A0\u3059\u308B\u6642\u306B\u5FC5\u8981\u306A\u5408\u8A00\u8449\u3092\u5165\u529B\u3059\u308B\n(\u7A7A\u6B04\u306E\u5834\u5408\u3001\u5408\u8A00\u8449\u306F\u5FC5\u8981\u7121\u304F\u306A\u308B)"
 --- !u!114 &658780396
@@ -3685,7 +3701,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960b9eb790467b348993350df527b788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _messageStackDescription: {fileID: 640964778}
+  messageStackDescription: {fileID: 640964778}
   _eventTrigger: {fileID: 753963931}
   DispMessage: "\u6761\u4EF6\u3092\u6307\u5B9A\u3057\u3066\u65B0\u898F\u306B\u90E8\u5C4B\u3092\u4F5C\u6210\u3057\u3001\u90E8\u5C4B\u306E\u53C2\u52A0\u8005\u52DF\u96C6\u3059\u308B\u3002"
 --- !u!114 &753963931
@@ -3871,7 +3887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960b9eb790467b348993350df527b788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _messageStackDescription: {fileID: 640964778}
+  messageStackDescription: {fileID: 640964778}
   _eventTrigger: {fileID: 770021075}
   DispMessage: "\u73FE\u5728\u52DF\u96C6\u4E2D\u306E\u90E8\u5C4B\u3092\u691C\u7D22\u3057\u3001\u53C2\u52A0\u3059\u308B\u90E8\u5C4B\u3092\u9078\u3076\u3002"
 --- !u!114 &770021075
@@ -4419,7 +4435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960b9eb790467b348993350df527b788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _messageStackDescription: {fileID: 640964778}
+  messageStackDescription: {fileID: 640964778}
   _eventTrigger: {fileID: 798337916}
   DispMessage: "\u540C\u3058\u304F\u30E9\u30F3\u30C0\u30E0\u30DE\u30C3\u30C1\u30F3\u30B0\u3092\u9078\u629E\u3057\u305F\u30D7\u30EC\u30A4\u30E4\u30FC4\u4EBA\u3068\u5BFE\u6226\u3092\u884C\u3046\u3002"
 --- !u!114 &798337916
@@ -5167,7 +5183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960b9eb790467b348993350df527b788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _messageStackDescription: {fileID: 640964778}
+  messageStackDescription: {fileID: 640964778}
   _eventTrigger: {fileID: 906445644}
   DispMessage: "\u30EB\u30FC\u30EB\u3092\u9078\u629E\u3059\u308B"
 --- !u!114 &906445644
@@ -5575,7 +5591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960b9eb790467b348993350df527b788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _messageStackDescription: {fileID: 640964778}
+  messageStackDescription: {fileID: 640964778}
   _eventTrigger: {fileID: 986297763}
   DispMessage: "\u6761\u4EF6\u3092\u6307\u5B9A\u3057\u3066\u65B0\u898F\u306B\u90E8\u5C4B\u3092\u4F5C\u6210\u3057\u3001\u90E8\u5C4B\u306E\u53C2\u52A0\u8005\u52DF\u96C6\u3059\u308B\u3002"
 --- !u!114 &986297763
@@ -6023,7 +6039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960b9eb790467b348993350df527b788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _messageStackDescription: {fileID: 640964778}
+  messageStackDescription: {fileID: 640964778}
   _eventTrigger: {fileID: 1015904923}
   DispMessage: "\u6307\u5B9A\u3057\u305F\u6761\u4EF6\u3067\u90E8\u5C4B\u3092\u4F5C\u6210\u3057\u3001\u53C2\u52A0\u8005\u306E\u52DF\u96C6\u3092\u958B\u59CB\u3059\u308B\u3002"
 --- !u!114 &1015904923
@@ -10440,7 +10456,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960b9eb790467b348993350df527b788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _messageStackDescription: {fileID: 640964778}
+  messageStackDescription: {fileID: 640964778}
   _eventTrigger: {fileID: 2046242659}
   DispMessage: "\u4F5C\u6210\u3059\u308B\u90E8\u5C4B\u306E\u540D\u524D\u3092\u5165\u529B\u3059\u308B"
 --- !u!114 &2046242659
@@ -10845,6 +10861,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1759004616518250096, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
+      propertyPath: messageStackDescription
+      value: 
+      objectReference: {fileID: 640964778}
+    - target: {fileID: 1759004616518250096, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
       propertyPath: _messageStackDescription
       value: 
       objectReference: {fileID: 640964778}
@@ -10861,17 +10881,37 @@ PrefabInstance:
       value: nyaa~
       objectReference: {fileID: 0}
     - target: {fileID: 5691464672358726710, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
+      propertyPath: ownerTextMesh
+      value: 
+      objectReference: {fileID: 2007379480}
+    - target: {fileID: 5691464672358726710, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
       propertyPath: _ownerTextMesh
       value: 
       objectReference: {fileID: 2007379480}
+    - target: {fileID: 5691464672358726710, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
+      propertyPath: dispDescription
+      value: 
+      objectReference: {fileID: 251046836}
     - target: {fileID: 5691464672358726710, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
       propertyPath: _dispDescription
       value: 
       objectReference: {fileID: 251046836}
     - target: {fileID: 5691464672358726710, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
+      propertyPath: roomNameTextMesh
+      value: 
+      objectReference: {fileID: 667806309}
+    - target: {fileID: 5691464672358726710, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
       propertyPath: _roomNameTextMesh
       value: 
       objectReference: {fileID: 667806309}
+    - target: {fileID: 5691464672358726710, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
+      propertyPath: curMemberNumTextMesh
+      value: 
+      objectReference: {fileID: 885159083}
+    - target: {fileID: 5691464672358726710, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
+      propertyPath: isSetKeywordTextMesh
+      value: 
+      objectReference: {fileID: 1007718405}
     - target: {fileID: 5691464672358726710, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
       propertyPath: _CurMemberNumTextMesh
       value: 
@@ -10880,6 +10920,10 @@ PrefabInstance:
       propertyPath: _isSetKeywordTextMesh
       value: 
       objectReference: {fileID: 1007718405}
+    - target: {fileID: 5691464672358726710, guid: d59934d270535e04c8e1e8d9a8149c5c, type: 3}
+      propertyPath: waitingMatchingOverlayObj
+      value: 
+      objectReference: {fileID: 553784102}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
