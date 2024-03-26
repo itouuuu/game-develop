@@ -9,7 +9,7 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
 {
     public string RoomName;
     public int OwnerID;
-    public bool IsSetKeyword;
+    public string keyword;
     public int CurMemberNum;
     //以下4つが、上4つの変数に対応するテキストを表示する
     public TextMeshProUGUI roomNameTextMesh;
@@ -20,10 +20,25 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
 
     public DispDescriptionOnHover dispDescription;
     public GameObject waitingMatchingOverlayObj;
+    public KeywordInputOverLayOnMatchingScene keywordInputOverlay;
     
     // Start is called before the first frame update
     void Start()
     {
+        if (!keywordInputOverlay) 
+        {
+            KeywordInputOverLayOnMatchingScene[] tmpAry=FindObjectsByType<KeywordInputOverLayOnMatchingScene>(FindObjectsInactive.Include,FindObjectsSortMode.None);
+            if (tmpAry.Length > 0)
+            {
+                Debug.Log("kakakaka");
+                keywordInputOverlay = tmpAry[0];
+            }
+            else 
+            {
+                Debug.Log("wwwwww");
+            }
+        }
+
         if (!waitingMatchingOverlayObj) 
         {
             waitingMatchingOverlayObj = GameObject.Find("WaitingOverlay");
@@ -68,7 +83,7 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
     {
         RoomName = roomInfo.Name;
         OwnerID = roomInfo.OwnerID;
-        IsSetKeyword = roomInfo.IsSetKeyword;
+        keyword = roomInfo.keyword;
         CurMemberNum = roomInfo.CurMemberNum;
         ResetTextMeshsText();
     }
@@ -78,14 +93,15 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
     {
         roomNameTextMesh.text = RoomName;
         ownerTextMesh.text = $"{OwnerID}";
-        isSetKeywordTextMesh.text = IsSetKeyword ? "あり" :"無し";
+        isSetKeywordTextMesh.text = keyword!="" ? "あり" :"無し";
         curMemberNumTextMesh.text =$"{CurMemberNum}/4";
         dispDescription.DispMessage = $"部屋「{RoomName}」に参加する(残り2名)";
     }
 
     public void OnClicked() 
     {
-        PhotonNetwork.JoinRoom(RoomName);
-        waitingMatchingOverlayObj.SetActive(true);
+        //PhotonNetwork.JoinRoom(RoomName);
+        //waitingMatchingOverlayObj.SetActive(true);
+        keywordInputOverlay.ActivateOverlay(RoomName, keyword);
     }
 }

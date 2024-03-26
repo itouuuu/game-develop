@@ -12,15 +12,15 @@ public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
     {
         public string Name;
         public int OwnerID;
-        public bool IsSetKeyword;
+        public string keyword;
         public int CurMemberNum;
         public RoomInfoOnMatchingScene InfoDispObj;
 
-        public Roominfo(string name,int ownerID,bool isSetKeyword,int curMemberNum, RoomInfoOnMatchingScene infoDispObj) 
+        public Roominfo(string name,int ownerID, string keyword,int curMemberNum, RoomInfoOnMatchingScene infoDispObj) 
         {
             Name = name;
             OwnerID = ownerID;
-            IsSetKeyword = isSetKeyword;
+            this.keyword = keyword;
             CurMemberNum = curMemberNum;
             InfoDispObj = infoDispObj;
         }
@@ -80,7 +80,7 @@ public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
                 RoomInfoOnMatchingScene newInfoObj = Instantiate(roomInfoPrefab, viewportContent); //部屋の情報を表示するGameObjectを作成
                 //newInfoObjにシーン内のコンポーネントやGameObjectの参照を渡す
                 newInfoObj.waitingMatchingOverlayObj = matchingWaitingOverlayObj;
-                _roomInfos.Add(new Roominfo(aRoomInfo.Name, aRoomInfo.masterClientId, keyword!="", aRoomInfo.PlayerCount, newInfoObj));//部屋の情報を格納しているリストにその部屋の情報を追加
+                _roomInfos.Add(new Roominfo(aRoomInfo.Name, aRoomInfo.masterClientId, keyword, aRoomInfo.PlayerCount, newInfoObj));//部屋の情報を格納しているリストにその部屋の情報を追加
                 newInfoObj.SetValues(_roomInfos[_roomInfos.Count - 1]);//部屋の情報を表示するGameObjectに、情報を表示する為の情報を渡す
             }
             else    //すでにリストに入っているなら
