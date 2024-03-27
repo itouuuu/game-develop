@@ -95,13 +95,20 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
         ownerTextMesh.text = $"{OwnerID}";
         isSetKeywordTextMesh.text = keyword!="" ? "あり" :"無し";
         curMemberNumTextMesh.text =$"{CurMemberNum}/4";
-        dispDescription.DispMessage = $"部屋「{RoomName}」に参加する(残り2名)";
+        dispDescription.DispMessage = $"部屋「{RoomName}」に参加する(残り{4-CurMemberNum}名)";
     }
 
     public void OnClicked() 
     {
-        //PhotonNetwork.JoinRoom(RoomName);
-        //waitingMatchingOverlayObj.SetActive(true);
-        keywordInputOverlay.ActivateOverlay(RoomName, keyword);
+       
+        if (keyword != "")//合言葉無しなら 
+        {
+            keywordInputOverlay.ActivateOverlay(RoomName, keyword);
+        }
+        else 
+        {
+            PhotonNetwork.JoinRoom(RoomName);
+            waitingMatchingOverlayObj.SetActive(true);
+        }
     }
 }
