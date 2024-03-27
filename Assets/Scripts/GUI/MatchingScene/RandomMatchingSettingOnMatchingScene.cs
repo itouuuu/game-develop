@@ -66,23 +66,27 @@ public class RandomMatchingSettingOnMatchingScene : MonoBehaviourPunCallbacks
     {
         foreach (RoomInfo aRoomInfo in roomList) 
         {
-            bool isRandom = false;//その部屋がランダムマッチング用の部屋か
-            if (aRoomInfo.CustomProperties.ContainsKey("IsRandom") && aRoomInfo.CustomProperties["IsRandom"] is string && ((string)aRoomInfo.CustomProperties["IsRandom"]) == "true") //カスタムプロパティをみて判断
-            {
-                isRandom = true;
-            }
+            bool isRandom = aRoomInfo.CustomProperties.GetCastValue<string>("IsRandom","")=="true"?true:false;//その部屋がランダムマッチング用の部屋か
+            
 
-            if (!aRoomInfo.IsVisible || !aRoomInfo.IsOpen || aRoomInfo.RemovedFromList|| !isRandom) 
-            {
-                continue;
-            }
+
+            
             int cachedElementIndex = randomMatchingRoomCache.FindIndex((aData) => { return aData.roomName == aRoomInfo.Name; });
-            if (cachedElementIndex >= 0)// すでにrandomMatchingRoomCacheに存在している部屋の情報なら
+            if (!aRoomInfo.IsVisible || !aRoomInfo.IsOpen || aRoomInfo.RemovedFromList || !isRandom)//もし、リストから排除すべき部屋なら
             {
+                if (cachedElementIndex >= 0)
+                {
+                    randomMatchingRoomCache.RemoveAt(cachedElementIndex);//リストから排除
+                }
+            }
+            else if (cachedElementIndex >= 0)// すでにrandomMatchingRoomCacheに存在している部屋の情報なら
+            {
+                //その部屋の情報を更新
                 randomMatchingRoomCache[cachedElementIndex] = (randomMatchingRoomCache[cachedElementIndex].roomName, aRoomInfo.PlayerCount);
             }
             else //まだrandomMatchingRoomCacheにない部屋の情報なら
             {
+                //その部屋の情報を追加
                 randomMatchingRoomCache.Add((aRoomInfo.Name, aRoomInfo.PlayerCount));
             }
             
