@@ -16,11 +16,11 @@ public class MatchingScene : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("★マスターサーバー接続成功");
+        Debug.Log("マスターサーバー接続成功");
         _loadingOnConnectingObj.SetActive(false);
 
         //ロビーに入る
-        if (PhotonNetwork.IsConnected)//マスターサーバーと接続しているときはロビーに入ることができる
+        if (PhotonNetwork.IsConnected)
         {
             PhotonNetwork.JoinLobby();
         }
