@@ -9,6 +9,7 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
 {
     public string RoomName;
     public int OwnerID;
+    public string OwnerNickName="";
     public string keyword;
     public int CurMemberNum;
     //以下4つが、上4つの変数に対応するテキストを表示する
@@ -82,6 +83,7 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
     public void SetValues(JoinRoomSettingOnMatchingScene.Roominfo roomInfo) 
     {
         RoomName = roomInfo.Name;
+        OwnerNickName = roomInfo.ownerName;
         OwnerID = roomInfo.OwnerID;
         keyword = roomInfo.keyword;
         CurMemberNum = roomInfo.CurMemberNum;
@@ -92,7 +94,7 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
     public void ResetTextMeshsText() 
     {
         roomNameTextMesh.text = RoomName;
-        ownerTextMesh.text = $"{OwnerID}";
+        ownerTextMesh.text = $"{OwnerNickName}#{OwnerID}";
         isSetKeywordTextMesh.text = keyword!="" ? "あり" :"無し";
         curMemberNumTextMesh.text =$"{CurMemberNum}/4";
         dispDescription.DispMessage = $"部屋「{RoomName}」に参加する(残り{4-CurMemberNum}名)";
