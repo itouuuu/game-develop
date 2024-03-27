@@ -10,17 +10,40 @@ public class MatchingScene : MonoBehaviourPunCallbacks
 
     [SerializeField] GameObject _loadingOnConnectingObj;
     private List<string> _cachedRoomNames=new List<string>();
-    public string BattleSceneName="TestScene";
+    //4人集まった時に遷移するシーンの名前
     // Start is called before the first frame update
     void Start()
     {
-        isTransitedNextScene=false;
-        PhotonNetwork.ConnectUsingSettings();
+        
+        //サーバーに繋がっていないなら
+        if (!PhotonNetwork.IsConnected)
+        {
+            _loadingOnConnectingObj.SetActive(true);
+            //マスターサーバーに接続する
+            PhotonNetwork.ConnectUsingSettings();
+        }
+        //サーバーに繋がって、ロビーにいるなら
+        else if (PhotonNetwork.InLobby)
+        {
+            //何もしない
+        }
+        //サーバーに繋がって、ルームにいるなら
+        else if (PhotonNetwork.InRoom)
+        {
+            _loadingOnConnectingObj.SetActive(true);
+            //ルームを去り、マスターサーバーに接続
+            PhotonNetwork.LeaveRoom();
+        }
+        //サーバーに繋がって、ロビーにもルームにもいないなら
+        else 
+        {
+            //ロビーに入る
+            PhotonNetwork.JoinLobby();
+        }
     }
 
     public override void OnConnectedToMaster()
     {
-        Debug.Log("マスターサーバー接続成功");
         _loadingOnConnectingObj.SetActive(false);
 
         //現在立っている部屋の情報を得る為にロビーに入る
@@ -32,7 +55,6 @@ public class MatchingScene : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
-        //Debug.Log("ルームリストが更新されました");
         foreach (var aRoomInfo in roomList) 
         {
             if (!aRoomInfo.IsVisible || !aRoomInfo.IsOpen || !aRoomInfo.RemovedFromList) 
@@ -48,7 +70,6 @@ public class MatchingScene : MonoBehaviourPunCallbacks
                 _cachedRoomNames.Add(aRoomInfo.Name);
             }
         }
-        //Debug.Log(_cachedRoomNames.Count);
     }
 
     public List<string> CachedRoomNames
@@ -56,15 +77,10 @@ public class MatchingScene : MonoBehaviourPunCallbacks
         get { return _cachedRoomNames; }
     }
 
-    bool isTransitedNextScene;
 
     // Update is called once per frame
     void Update()
     {
-        if (!isTransitedNextScene && PhotonNetwork.InRoom&&PhotonNetwork.CurrentRoom.PlayerCount>=4) 
-        {
-            SceneManager.LoadScene(BattleSceneName);
-            isTransitedNextScene = true;
-        }
+
     }
 }
