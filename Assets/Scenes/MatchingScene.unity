@@ -3386,6 +3386,7 @@ GameObject:
   - component: {fileID: 586292156}
   - component: {fileID: 586292159}
   - component: {fileID: 586292158}
+  - component: {fileID: 586292160}
   m_Layer: 5
   m_Name: RandomMatchingSetting
   m_TagString: Untagged
@@ -3480,6 +3481,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates: []
+--- !u!114 &586292160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586292154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9999ba8658de6a4d943470a119535ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startMatchingButton: {fileID: 189979116}
+  waitingMatchingOverlayObj: {fileID: 553784102}
 --- !u!1 &591438604
 GameObject:
   m_ObjectHideFlags: 0
