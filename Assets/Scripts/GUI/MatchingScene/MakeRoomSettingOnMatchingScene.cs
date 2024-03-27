@@ -31,8 +31,10 @@ public class MakeRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
         string roomKeyword= _keywordInputField.text;
 
         ExitGames.Client.Photon.Hashtable roomProperty = new ExitGames.Client.Photon.Hashtable();
-        roomProperty["Keyword"] = roomKeyword;
-        string[] publicPropsForLobby=new string[] { "Keyword" };
+        roomProperty[Consts.ROOM_PASSWARD] = roomKeyword;
+        //PhotonNetwork.NickName = "abes";
+        roomProperty[Consts.ROOM_OWNER_NICKNAME] =PhotonNetwork.NickName;
+        string[] publicPropsForLobby=new string[] { Consts.ROOM_PASSWARD,Consts.ROOM_OWNER_NICKNAME };
 
 
         RoomOptions roomOptions = new RoomOptions();

@@ -49,8 +49,8 @@ public class RandomMatchingSettingOnMatchingScene : MonoBehaviourPunCallbacks
         }
 
         ExitGames.Client.Photon.Hashtable roomProperty = new ExitGames.Client.Photon.Hashtable();
-        roomProperty["IsRandom"] = "true";
-        string[] publicPropsForLobby = new string[] { "IsRandom" };
+        roomProperty[Consts.IS_RANDOM_MATCHING] = "true";
+        string[] publicPropsForLobby = new string[] { Consts .IS_RANDOM_MATCHING};
 
 
         RoomOptions roomOptions = new RoomOptions();
@@ -66,7 +66,7 @@ public class RandomMatchingSettingOnMatchingScene : MonoBehaviourPunCallbacks
     {
         foreach (RoomInfo aRoomInfo in roomList) 
         {
-            bool isRandom = aRoomInfo.CustomProperties.GetCastValue<string>("IsRandom","")=="true"?true:false;//その部屋がランダムマッチング用の部屋か
+            bool isRandom = aRoomInfo.CustomProperties.GetCastValue<string>(Consts.IS_RANDOM_MATCHING,"")=="true"?true:false;//その部屋がランダムマッチング用の部屋か
             
 
 
