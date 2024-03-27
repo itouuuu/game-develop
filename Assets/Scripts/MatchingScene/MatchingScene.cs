@@ -10,6 +10,7 @@ public class MatchingScene : MonoBehaviourPunCallbacks
 
     [SerializeField] GameObject _loadingOnConnectingObj;
     private List<string> _cachedRoomNames=new List<string>();
+    public string BattleSceneName="TestScene";
     // Start is called before the first frame update
     void Start()
     {
@@ -62,7 +63,7 @@ public class MatchingScene : MonoBehaviourPunCallbacks
     {
         if (!isTransitedNextScene && PhotonNetwork.InRoom&&PhotonNetwork.CurrentRoom.PlayerCount>=4) 
         {
-            SceneManager.LoadScene("TestScene");
+            SceneManager.LoadScene(BattleSceneName);
             isTransitedNextScene = true;
         }
     }

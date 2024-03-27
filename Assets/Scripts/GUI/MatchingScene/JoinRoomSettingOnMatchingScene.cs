@@ -54,8 +54,9 @@ public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
 
         foreach (var aRoomInfo in roomList)
         {
-            int aRoomIndex = _roomInfos.FindIndex((aData) => { return aData.Name == aRoomInfo.Name; });
-            if (!aRoomInfo.IsVisible || !aRoomInfo.IsOpen || aRoomInfo.RemovedFromList)//部屋がリスト入っているべきで無いなら
+            int aRoomIndex = _roomInfos.FindIndex((aData) => { return aData.Name == aRoomInfo.Name; });//部屋がリストにすでに入っている場合、そのインデックス。(そうでない場合-1)
+            bool isRandom = aRoomInfo.CustomProperties.GetCastValue<string>("IsRandom", "") == "true" ? true : false;//部屋がランダムマッチング用の部屋か
+            if (!aRoomInfo.IsVisible || !aRoomInfo.IsOpen || aRoomInfo.RemovedFromList|| aRoomInfo.PlayerCount>=4|| isRandom)//部屋がリスト入っているべきで無いなら(入れないなら)
             {
                 if (aRoomIndex >= 0)//すでにリストに入っているなら
                 {
