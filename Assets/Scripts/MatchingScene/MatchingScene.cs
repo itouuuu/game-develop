@@ -3,14 +3,17 @@ using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MatchingScene : MonoBehaviourPunCallbacks
 {
+
     [SerializeField] GameObject _loadingOnConnectingObj;
     private List<string> _cachedRoomNames=new List<string>();
     // Start is called before the first frame update
     void Start()
     {
+        isTransitedNextScene=false;
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -19,7 +22,7 @@ public class MatchingScene : MonoBehaviourPunCallbacks
         Debug.Log("マスターサーバー接続成功");
         _loadingOnConnectingObj.SetActive(false);
 
-        //ロビーに入る
+        //現在立っている部屋の情報を得る為にロビーに入る
         if (PhotonNetwork.IsConnected)
         {
             PhotonNetwork.JoinLobby();
@@ -52,9 +55,15 @@ public class MatchingScene : MonoBehaviourPunCallbacks
         get { return _cachedRoomNames; }
     }
 
+    bool isTransitedNextScene;
+
     // Update is called once per frame
     void Update()
     {
-        
+        if (!isTransitedNextScene && PhotonNetwork.InRoom&&PhotonNetwork.CurrentRoom.PlayerCount>=4) 
+        {
+            SceneManager.LoadScene("TestScene");
+            isTransitedNextScene = true;
+        }
     }
 }
