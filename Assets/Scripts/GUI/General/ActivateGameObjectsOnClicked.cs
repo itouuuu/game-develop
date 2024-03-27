@@ -5,18 +5,17 @@ using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
 
-public class ActivateGameObjectOnClicked : MonoBehaviour
+public class ActivateGameObjectsOnClicked : MonoBehaviour
 {
-    public enum OnClickedMode 
+    public enum OnClickedMode
     {
         ActivateObject,
         DeactivateObject,
         SwichActivation
     }
-
-    public GameObject TargetObject;
+    [SerializeField] private OnClickedMode _mode = OnClickedMode.SwichActivation;
+    public GameObject[] TargetObjects;
     private Button button;
-    [SerializeField] private OnClickedMode _mode=OnClickedMode.SwichActivation;
 
     // Start is called before the first frame update
     void Start()
@@ -28,20 +27,20 @@ public class ActivateGameObjectOnClicked : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    public void OnClicked() 
+    public void OnClicked()
     {
-        if (TargetObject)
+        foreach (GameObject TargetObject in TargetObjects) 
         {
-            TargetObject.SetActive(_mode == OnClickedMode.SwichActivation ? !TargetObject.activeSelf : _mode == OnClickedMode.ActivateObject ? true : false);
+            if (TargetObject)
+            {
+                TargetObject.SetActive(_mode==OnClickedMode.SwichActivation?!TargetObject.activeSelf: _mode == OnClickedMode.ActivateObject ?true:false);
+            }
         }
-        else 
-        {
-            Debug.Log("TargetObjectÇ™ê›íËÇ≥ÇÍÇƒÇ¢Ç‹ÇπÇÒ");
-        }
-    } 
+        
+    }
 
 
 }
