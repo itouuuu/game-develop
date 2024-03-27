@@ -31,7 +31,7 @@ public class MatchingScene : MonoBehaviourPunCallbacks
         else if (PhotonNetwork.InRoom)
         {
             _loadingOnConnectingObj.SetActive(true);
-            //ルームを去り、マスターサーバーに接続
+            //ルームをでて、マスターサーバーに接続
             PhotonNetwork.LeaveRoom();
         }
         //サーバーに繋がって、ロビーにもルームにもいないなら
