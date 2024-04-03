@@ -53,7 +53,7 @@ public abstract class WizardParameter : WizardPlayerStatus
             //プレハブを指定位置(自分の座標+マウス方向の少し前方)に生成
             GameObject Ishell = PhotonNetwork.Instantiate("Prefabs/MagicAttack",  playerPosition + (mouseClickPosition - playerPosition).normalized/1.0f, Quaternion.identity);
             //shellTargetPositionを引数としてshellの中のスクリプトの関数を呼び出す。
-            Ishell.GetComponent<Shell>().SetInitialMagicAttackParameters(GetMagicAttackSpeed(),GetMagicAttackReflectNum());
+            Ishell.GetComponent<Shell>().InitializeMagicAttackParameters(GetMagicAttackSpeed(),GetMagicAttackReflectNum());
             Ishell.GetComponent<Shell>().SetImpactPosition(mouseClickPosition);
         }
     }
@@ -63,7 +63,8 @@ public abstract class WizardParameter : WizardPlayerStatus
         if (Input.GetMouseButtonDown(1))
         {
             //プレハブを指定位置に生成
-            PhotonNetwork.Instantiate("Prefabs/MagicTrap", playerPosition, Quaternion.identity);
+            GameObject IMagicTrap = PhotonNetwork.Instantiate("Prefabs/MagicTrap", playerPosition, Quaternion.identity);
+            //IMagicTrap.GetComponent<MagicTrap>().InitializeMagicTrapParameters(GetPlayerName(),GetMagicTrapExplosionRadius(),GetMagicTrapDetectionRadius());
         }
     }
 

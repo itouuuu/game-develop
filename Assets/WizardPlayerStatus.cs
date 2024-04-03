@@ -21,7 +21,7 @@ public class WizardPlayerStatus : MonoBehaviourPunCallbacks
         GameOver
     }
     //プレイヤーネーム
-    string playerName;
+    string playerName = "Test";
     //プレイヤーのライフ
     private int hitPoint;
     //プレイヤーの移動速度
@@ -33,17 +33,17 @@ public class WizardPlayerStatus : MonoBehaviourPunCallbacks
     //魔法弾の速度
     private float magicAttackSpeed = 8.0f;
     //魔法弾の反射回数
-    private int magicAttackReflectNum = 10;
+    private int magicAttackReflectNum = 2;
     //罠の最大設置数
     private int maxMagicTrap = 1;
     //罠の現在設置数
     private int countMagicTrap = 0;
     //罠の爆発半径
-    private int magicTrapExplosionRadius = 0;
+    private float magicTrapExplosionRadius = 2;
     //罠の探知半径
-    private int magicTrapDetectionRadius = 0;
+    private float magicTrapDetectionRadius = 2;
     //罠の設置者(id?)
-    private int magicTrapID = 0;
+    private string magicTrapID = "";
 
     //プレイヤー名
     public void SetPlayerName(string newPlayerName){
@@ -113,17 +113,17 @@ public class WizardPlayerStatus : MonoBehaviourPunCallbacks
         return countMagicTrap;
     }
 
-    public void SetMagicTrapExplosionRadius(int newMagicTrapExplosionRadius){
+    public void SetMagicTrapExplosionRadius(float newMagicTrapExplosionRadius){
         this.magicTrapExplosionRadius = newMagicTrapExplosionRadius;
     }
-    public int GetMagicTrapExplosionRadius(){
+    public float GetMagicTrapExplosionRadius(){
         return magicTrapExplosionRadius;
     }
 
-    public void SetMagicTrapDetectionRadius(int newMagicTrapDetectionRadius){
+    public void SetMagicTrapDetectionRadius(float newMagicTrapDetectionRadius){
         this.magicTrapDetectionRadius = newMagicTrapDetectionRadius;
     }
-    public int GetMagicTrapDetectionRadius(){
+    public float GetMagicTrapDetectionRadius(){
         return magicTrapDetectionRadius;
         
     }

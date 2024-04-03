@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class Shell : MonoBehaviour
+public class Shell : MonoBehaviourPunCallbacks
 {
     //着弾地点
     public Vector3 impactPosition = Vector3.zero;
@@ -21,30 +23,16 @@ public class Shell : MonoBehaviour
         this.transform.position += (normShellVelocity * magicAttackSpeed * Time.deltaTime);
     }
 
-/*
-    void OnTriggerEnter(Collider other)
-    {
-        
-        if (other.gameObject.name == "MagicAttack(Clone)") {
-            // 衝突したら弾を削除する。
-            DestroyMagicAttack();
-        }
-        if (other.gameObject.name == "Wall") {
-            //壁と衝突したらisTriggerをオフにする(接触面の法線ベクトル検出のため)。
-            //this.GetComponent<Collider>().isTrigger = false;
-        }
-    }*/
-
     void OnCollisionEnter(Collision other)
     {
-        Debug.Log(other.gameObject.name);
+
         if (other.gameObject.name == "MagicAttack(Clone)") {
             // 衝突したら弾を削除する。
-            DestroyMagicAttack();
+            DeleteMagicAttack();
         }
         else if (other.gameObject.name == "PlayerWizard(Clone)") {
             // 衝突したら弾を削除する。
-            DestroyMagicAttack();
+            DeleteMagicAttack();
         }
         else if (other.gameObject.name == "Wall") {
             //反射を行う処理。
@@ -53,7 +41,7 @@ public class Shell : MonoBehaviour
     }
 
     //魔法弾生成時に呼び出され速度と反射回数が与えられる
-    public void SetInitialMagicAttackParameters(float speed,int reflectNum){
+    public void InitializeMagicAttackParameters(float speed,int reflectNum){
         magicAttackSpeed = speed;
         magicAttackReflectNum = reflectNum;
     }
@@ -72,7 +60,7 @@ public class Shell : MonoBehaviour
     void Reflect(Collision wall){
         if(magicAttackReflectNum <= 0){
             //砲弾の終了
-            DestroyMagicAttack();
+            DeleteMagicAttack();
         }
         magicAttackReflectNum--;
 
@@ -93,7 +81,7 @@ public class Shell : MonoBehaviour
     }
 
     //弾を消す際に呼ばれる関数
-    void DestroyMagicAttack(){
+    void DeleteMagicAttack(){
         //あとで消えるときの音とかを入れる
         Destroy(this.gameObject);
     }
