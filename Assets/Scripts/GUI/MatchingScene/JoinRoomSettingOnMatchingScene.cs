@@ -1,13 +1,14 @@
 using Photon.Pun;
 using Photon.Realtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-
+using UnityEngine.UI;
 
 public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
 {
+
     public struct Roominfo
     {
         public string Name;
@@ -15,9 +16,10 @@ public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
         public int OwnerID;
         public string keyword;
         public int CurMemberNum;
+        public bool IsAbleToEnter;
         public RoomInfoOnMatchingScene InfoDispObj;
 
-        public Roominfo(string name,string ownerName,int ownerID, string keyword,int curMemberNum, RoomInfoOnMatchingScene infoDispObj) 
+        public Roominfo(string name,string ownerName,int ownerID, string keyword,int curMemberNum, RoomInfoOnMatchingScene infoDispObj,bool  isAbleToEnter) 
         {
             Name = name;
             this.ownerName = ownerName;
@@ -25,6 +27,7 @@ public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
             this.keyword = keyword;
             CurMemberNum = curMemberNum;
             InfoDispObj = infoDispObj;
+            IsAbleToEnter = isAbleToEnter;
         }
     }
 
@@ -32,21 +35,21 @@ public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
     private List<Roominfo> _roomInfos = new List<Roominfo> ();
 
     [SerializeField] private Transform viewportContent;
-
     public MessageStackDescription messageStackDescription;
+    public Button UpdateRoomListButton;
     //public GameObject matchingWaitingOverlayObj;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        UpdateRoomListButton.onClick.AddListener(RemoveClosedRoomInfos);
         ResizeViewPortContent();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     public void ResizeViewPortContent()
@@ -71,11 +74,18 @@ public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
             {
                 if (aRoomIndex >= 0)//すでにリストに入っているなら
                 {
+                    //isAbleToEnterをfalseにして、表示を変える
+                    Roominfo temp = _roomInfos[aRoomIndex];
+                    temp.IsAbleToEnter = false;
+                    _roomInfos[aRoomIndex] =temp;
+                    _roomInfos[aRoomIndex].InfoDispObj.SetValues(_roomInfos[aRoomIndex]);
+                    /*
                     if (_roomInfos[aRoomIndex].InfoDispObj) 
                     {
                         Destroy(_roomInfos[aRoomIndex].InfoDispObj.gameObject);//その部屋の情報を表示するGameObjectを消去
                     }
                     _roomInfos.RemoveAt(aRoomIndex);//部屋の情報を格納しているリストからも消す
+                    */
                 }
                 continue;
             }
@@ -89,7 +99,7 @@ public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
                 RoomInfoOnMatchingScene newInfoObj = Instantiate(roomInfoPrefab, viewportContent); //部屋の情報を表示するGameObjectを作成
                 //newInfoObjにシーン内のコンポーネントやGameObjectの参照を渡す
                 //newInfoObj.waitingMatchingOverlayObj = matchingWaitingOverlayObj;
-                _roomInfos.Add(new Roominfo(aRoomInfo.Name, ownerNickName, aRoomInfo.masterClientId, keyword, aRoomInfo.PlayerCount, newInfoObj));//リストに部屋の情報を追加
+                _roomInfos.Add(new Roominfo(aRoomInfo.Name, ownerNickName, aRoomInfo.masterClientId, keyword, aRoomInfo.PlayerCount, newInfoObj,true));//リストに部屋の情報を追加
                 newInfoObj.SetValues(_roomInfos[_roomInfos.Count - 1]);//部屋の情報を表示するGameObjectに、情報を表示する為の情報を渡す
             }
             else    //すでにリストに入っているなら
@@ -101,5 +111,29 @@ public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
             }
         }
         ResizeViewPortContent();
+    }
+
+    //_roomInfosから、閉じている部屋を除外。対応するゲームオブジェクトも削除
+    public void RemoveClosedRoomInfos() 
+    {
+        List<int> removedInfosIndexes=new List<int>();
+        for ( int i=0;i<_roomInfos.Count;i++ ) 
+        {
+            Roominfo aRoomInfo = _roomInfos[i];
+            if (!aRoomInfo.IsAbleToEnter) 
+            {
+                removedInfosIndexes.Add(i);
+            }
+        }
+        for (int i = removedInfosIndexes.Count - 1; i >= 0; i--) 
+        {
+            RoomInfoOnMatchingScene infoDispObj = _roomInfos[removedInfosIndexes[i]].InfoDispObj;
+            if (infoDispObj)
+            {
+                Destroy(infoDispObj.gameObject);//その部屋の情報を表示するGameObjectを消去
+            }
+            _roomInfos.RemoveAt(removedInfosIndexes[i]);//部屋の情報を格納しているリストからも消す
+        }
+
     }
 }
