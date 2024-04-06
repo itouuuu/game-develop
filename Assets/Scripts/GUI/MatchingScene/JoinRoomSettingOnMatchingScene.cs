@@ -34,7 +34,7 @@ public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
     [SerializeField] private Transform viewportContent;
 
     public MessageStackDescription messageStackDescription;
-    public GameObject matchingWaitingOverlayObj;
+    //public GameObject matchingWaitingOverlayObj;
 
 
     // Start is called before the first frame update
@@ -79,7 +79,7 @@ public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
                 
                 RoomInfoOnMatchingScene newInfoObj = Instantiate(roomInfoPrefab, viewportContent); //部屋の情報を表示するGameObjectを作成
                 //newInfoObjにシーン内のコンポーネントやGameObjectの参照を渡す
-                newInfoObj.waitingMatchingOverlayObj = matchingWaitingOverlayObj;
+                //newInfoObj.waitingMatchingOverlayObj = matchingWaitingOverlayObj;
                 _roomInfos.Add(new Roominfo(aRoomInfo.Name, ownerNickName, aRoomInfo.masterClientId, keyword, aRoomInfo.PlayerCount, newInfoObj));//リストに部屋の情報を追加
                 newInfoObj.SetValues(_roomInfos[_roomInfos.Count - 1]);//部屋の情報を表示するGameObjectに、情報を表示する為の情報を渡す
             }

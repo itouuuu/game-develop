@@ -9,8 +9,8 @@ public class MakeRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
 {
     [SerializeField] private TMP_InputField _nameInputField;
     [SerializeField] private TMP_InputField _keywordInputField;
-    [SerializeField] private GameObject _roomMakeingOverlayObj;
-    [SerializeField] private GameObject _matchMakingOverlay;
+    //[SerializeField] private GameObject _roomMakeingOverlayObj;
+    //[SerializeField] private GameObject _matchMakingOverlay;
    
 
     // Start is called before the first frame update
@@ -44,14 +44,14 @@ public class MakeRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(roomName,roomOptions);
 
         Debug.Log($"Name:{_nameInputField.text}  Keyword:{_keywordInputField.text}");
-        _roomMakeingOverlayObj.SetActive(true);
+        //_roomMakeingOverlayObj.SetActive(true);
     }
 
     public override void OnCreatedRoom()
     {
         Debug.Log("ÉãÅ[ÉÄÇÃçÏê¨Ç…ê¨å˜ÇµÇ‹ÇµÇΩÅI");
-        _roomMakeingOverlayObj.SetActive(false);
-        _matchMakingOverlay.SetActive(true);
+        //_roomMakeingOverlayObj.SetActive(false);
+        //_matchMakingOverlay.SetActive(true);
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)

@@ -20,7 +20,7 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
     public Button button;
 
     public DispDescriptionOnHover dispDescription;
-    public GameObject waitingMatchingOverlayObj;
+    //public GameObject waitingMatchingOverlayObj;
     public KeywordInputOverLayOnMatchingScene keywordInputOverlay;
     
     // Start is called before the first frame update
@@ -39,11 +39,12 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
                 Debug.Log("wwwwww");
             }
         }
-
+        /*
         if (!waitingMatchingOverlayObj) 
         {
             waitingMatchingOverlayObj = GameObject.Find("WaitingOverlay");
         }
+        */
         if (!dispDescription) 
         {
             GameObject descriptionObj=GameObject.Find("Description");
@@ -110,7 +111,7 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
         else 
         {
             PhotonNetwork.JoinRoom(RoomName);
-            waitingMatchingOverlayObj.SetActive(true);
+            //waitingMatchingOverlayObj.SetActive(true);
         }
     }
 }

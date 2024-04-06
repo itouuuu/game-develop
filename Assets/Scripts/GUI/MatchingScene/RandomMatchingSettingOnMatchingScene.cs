@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class RandomMatchingSettingOnMatchingScene : MonoBehaviourPunCallbacks
 {
     public Button startMatchingButton;
-    public GameObject waitingMatchingOverlayObj;
+    //public GameObject waitingMatchingOverlayObj;
     public List<(string roomName, int curMemberNum)> randomMatchingRoomCache=new List<(string roomName, int curMemberNum)>();
 
     // Start is called before the first frame update
@@ -33,7 +33,7 @@ public class RandomMatchingSettingOnMatchingScene : MonoBehaviourPunCallbacks
             if (randomMatchingRoomCache[i].curMemberNum < 4) 
             {
                 PhotonNetwork.JoinRoom(randomMatchingRoomCache[i].roomName);
-                waitingMatchingOverlayObj.SetActive(true);
+                //waitingMatchingOverlayObj.SetActive(true);
                 Debug.Log("JoinedRandomRoom");
                 return;
             }
@@ -59,7 +59,7 @@ public class RandomMatchingSettingOnMatchingScene : MonoBehaviourPunCallbacks
         roomOptions.CustomRoomPropertiesForLobby = publicPropsForLobby;
         PhotonNetwork.CreateRoom(roomName, roomOptions);
         Debug.Log("CreateRandomRoom");
-        waitingMatchingOverlayObj.SetActive(true);
+        //waitingMatchingOverlayObj.SetActive(true);
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
