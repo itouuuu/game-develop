@@ -8570,10 +8570,10 @@ RectTransform:
   - {fileID: 446462091}
   - {fileID: 640964777}
   - {fileID: 43706059}
-  - {fileID: 1662981863}
   - {fileID: 377123683}
   - {fileID: 2048845606}
   - {fileID: 1019070152}
+  - {fileID: 1662981863}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

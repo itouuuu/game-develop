@@ -86,7 +86,7 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
 
     public void SetValues(JoinRoomSettingOnMatchingScene.Roominfo roomInfo) 
     {
-        RoomName = roomInfo.Name.Substring(Consts.ROOM_MATCHING_NAME_PREFIX.Length);
+        RoomName = roomInfo.Name;
         OwnerNickName = roomInfo.ownerName;
         OwnerID = roomInfo.OwnerID;
         keyword = roomInfo.keyword;
@@ -99,7 +99,7 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
     //実際に表示される情報を、現在のRoomInfo/OwnerID/IsSetKeyword/CurMemberNumの値に合わせて変更する。
     public void ResetTextMeshsText() 
     {
-        roomNameTextMesh.text = RoomName;
+        roomNameTextMesh.text = RoomName.Substring(Consts.ROOM_MATCHING_NAME_PREFIX.Length);
         ownerTextMesh.text = $"{OwnerNickName}#{OwnerID}";
         isSetKeywordTextMesh.text = keyword!="" ? "あり" :"無し";
         curMemberNumTextMesh.text = IsAbleToEnter?$"{CurMemberNum}/4":"Closed";
