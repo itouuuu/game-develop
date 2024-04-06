@@ -40,7 +40,7 @@ public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        
+        ResizeViewPortContent();
     }
 
     // Update is called once per frame
@@ -48,6 +48,15 @@ public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
     {
         
     }
+
+    public void ResizeViewPortContent()
+    {
+        float contentYSize=(20+20+100)*_roomInfos.Count+150;
+        Vector2 contentScale= ((RectTransform)viewportContent).sizeDelta;
+        contentScale.y = contentYSize;
+        ((RectTransform)viewportContent).sizeDelta = contentScale;
+    }
+
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
@@ -91,6 +100,6 @@ public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
                 
             }
         }
-
+        ResizeViewPortContent();
     }
 }
