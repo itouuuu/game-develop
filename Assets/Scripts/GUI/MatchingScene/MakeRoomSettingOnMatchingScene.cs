@@ -25,7 +25,7 @@ public class MakeRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
 
     public void OnClikedMakeRoomButton() 
     {
-        string roomName = _nameInputField.text;
+        string roomName = Consts.ROOM_MATCHING_NAME_PREFIX + _nameInputField.text;
         string roomKeyword= _keywordInputField.text;
 
         ExitGames.Client.Photon.Hashtable roomProperty = new ExitGames.Client.Photon.Hashtable();

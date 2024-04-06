@@ -86,7 +86,7 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
 
     public void SetValues(JoinRoomSettingOnMatchingScene.Roominfo roomInfo) 
     {
-        RoomName = roomInfo.Name;
+        RoomName = roomInfo.Name.Substring(Consts.ROOM_MATCHING_NAME_PREFIX.Length);
         OwnerNickName = roomInfo.ownerName;
         OwnerID = roomInfo.OwnerID;
         keyword = roomInfo.keyword;
