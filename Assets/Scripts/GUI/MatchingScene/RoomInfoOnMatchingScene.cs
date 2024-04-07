@@ -114,6 +114,8 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
             ColorBlock cb= button.colors;
             cb.normalColor =new Color(1,1,1);
             button.colors = cb;
+            image.color = new Color(1,1,1);
+
         }
         else 
         {

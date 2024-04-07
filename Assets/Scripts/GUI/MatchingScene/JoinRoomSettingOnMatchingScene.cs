@@ -85,7 +85,7 @@ public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
         {
             int aRoomIndex = _roomInfos.FindIndex((aData) => { return aData.Name == aRoomInfo.Name; });//部屋がリストにすでに入っている場合、そのインデックス。(そうでない場合-1)
             bool isRandom = aRoomInfo.CustomProperties.GetCastValue<string>(Consts.IS_RANDOM_MATCHING, "") == "true" ? true : false;//部屋がランダムマッチング用の部屋か
-            if (!aRoomInfo.IsVisible || !aRoomInfo.IsOpen || aRoomInfo.RemovedFromList|| aRoomInfo.PlayerCount>=4|| isRandom)//部屋がリスト入っているべきで無いなら(入れないなら)
+            if (!aRoomInfo.IsVisible || !aRoomInfo.IsOpen || aRoomInfo.RemovedFromList|| aRoomInfo.PlayerCount>=4|| isRandom)//部屋がリスト入っているべきで無いなら
             {
                 if (aRoomIndex >= 0)//すでにリストに入っているなら
                 {
@@ -105,12 +105,11 @@ public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
                 continue;
             }
 
+            string keyword = aRoomInfo.CustomProperties.GetCastValue<string>(Consts.ROOM_PASSWARD, "");
+            string ownerNickName = aRoomInfo.CustomProperties.GetCastValue<string>(Consts.ROOM_OWNER_NICKNAME, "nickName");
             if (aRoomIndex < 0)//リストに入っていないなら
             {
-                string keyword = aRoomInfo.CustomProperties.GetCastValue<string>(Consts.ROOM_PASSWARD,"");
-                string ownerNickName= aRoomInfo.CustomProperties.GetCastValue<string>(Consts.ROOM_OWNER_NICKNAME, "nickName");
-                Debug.Log($"{aRoomInfo.Name}'sKeyword:{ keyword}");
-                
+                Debug.Log($"{aRoomInfo.Name}'sKeyword:{keyword}");
                 RoomInfoOnMatchingScene newInfoObj = Instantiate(roomInfoPrefab, viewportContent); //部屋の情報を表示するGameObjectを作成
                 //newInfoObjにシーン内のコンポーネントやGameObjectの参照を渡す
                 //newInfoObj.waitingMatchingOverlayObj = matchingWaitingOverlayObj;
@@ -121,8 +120,13 @@ public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
             {
                 Roominfo temp = _roomInfos[aRoomIndex];
                 temp.CurMemberNum = aRoomInfo.PlayerCount;
-                _roomInfos[aRoomIndex]=temp;//部屋の情報を表示するGameObjectに、情報を表示する為の情報を渡す
-                
+                temp.OwnerID = aRoomInfo.masterClientId;
+                temp.keyword = keyword;
+                temp.ownerName = ownerNickName;
+                temp.IsAbleToEnter = true;
+                _roomInfos[aRoomIndex]=temp; //リストの部屋の情報を更新
+                _roomInfos[aRoomIndex].InfoDispObj.SetValues(_roomInfos[aRoomIndex]);//部屋の情報を表示するGameObjectに、情報を表示する為の情報を渡す
+
             }
         }
         ResizeViewPortContent();
