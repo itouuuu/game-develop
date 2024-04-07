@@ -9,8 +9,6 @@ public class MakeRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
 {
     [SerializeField] private TMP_InputField _nameInputField;
     [SerializeField] private TMP_InputField _keywordInputField;
-    [SerializeField] private GameObject _roomMakeingOverlayObj;
-    [SerializeField] private GameObject _matchMakingOverlay;
    
 
     // Start is called before the first frame update
@@ -27,7 +25,7 @@ public class MakeRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
 
     public void OnClikedMakeRoomButton() 
     {
-        string roomName = _nameInputField.text;
+        string roomName = Consts.ROOM_MATCHING_NAME_PREFIX + _nameInputField.text;
         string roomKeyword= _keywordInputField.text;
 
         ExitGames.Client.Photon.Hashtable roomProperty = new ExitGames.Client.Photon.Hashtable();
@@ -44,14 +42,14 @@ public class MakeRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
         PhotonNetwork.CreateRoom(roomName,roomOptions);
 
         Debug.Log($"Name:{_nameInputField.text}  Keyword:{_keywordInputField.text}");
-        _roomMakeingOverlayObj.SetActive(true);
+        //_roomMakeingOverlayObj.SetActive(true);
     }
 
     public override void OnCreatedRoom()
     {
         Debug.Log("ÉãÅ[ÉÄÇÃçÏê¨Ç…ê¨å˜ÇµÇ‹ÇµÇΩÅI");
-        _roomMakeingOverlayObj.SetActive(false);
-        _matchMakingOverlay.SetActive(true);
+        //_roomMakeingOverlayObj.SetActive(false);
+        //_matchMakingOverlay.SetActive(true);
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)

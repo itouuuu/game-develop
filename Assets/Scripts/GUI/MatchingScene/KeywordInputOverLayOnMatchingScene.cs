@@ -9,7 +9,7 @@ public class KeywordInputOverLayOnMatchingScene : MonoBehaviour
 {
     public string keyword;
     public string roomName;
-    public GameObject waitingMatchingOverlay;
+    //public GameObject waitingMatchingOverlay;
     public GameObject errorMessageObj;
     public Button okButton;
     public Button cancelButton;
@@ -46,7 +46,8 @@ public class KeywordInputOverLayOnMatchingScene : MonoBehaviour
         {
             PhotonNetwork.JoinRoom(roomName);
             this.gameObject.SetActive(false);
-            waitingMatchingOverlay.SetActive(true);
+            //waitingMatchingOverlay.SetActive(true);
+
         }
         else 
         {

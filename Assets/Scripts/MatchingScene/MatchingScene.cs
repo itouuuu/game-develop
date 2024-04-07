@@ -2,15 +2,32 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class MatchingScene : MonoBehaviourPunCallbacks
 {
+    enum OnlineState 
+    {
+        Offline,
+        EnteringMaster,
+        InMaster,
+        EnteringLobby,
+        InLobby,
+        EnteringRoom,
+        InRoom
+    }
 
-    [SerializeField] GameObject _loadingOnConnectingObj;
+
+
     private List<string> _cachedRoomNames=new List<string>();
-    //4人集まった時に遷移するシーンの名前
+
+    public string TransitBattleSceneName="TestScene";
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +35,6 @@ public class MatchingScene : MonoBehaviourPunCallbacks
         //サーバーに繋がっていないなら
         if (!PhotonNetwork.IsConnected)
         {
-            _loadingOnConnectingObj.SetActive(true);
             //マスターサーバーに接続する
             PhotonNetwork.ConnectUsingSettings();
         }
@@ -30,8 +46,6 @@ public class MatchingScene : MonoBehaviourPunCallbacks
         //サーバーに繋がって、ルームにいるなら
         else if (PhotonNetwork.InRoom)
         {
-            _loadingOnConnectingObj.SetActive(true);
-            //ルームをでて、マスターサーバーに接続
             PhotonNetwork.LeaveRoom();
         }
         //サーバーに繋がって、ロビーにもルームにもいないなら
@@ -40,18 +54,12 @@ public class MatchingScene : MonoBehaviourPunCallbacks
             //ロビーに入る
             PhotonNetwork.JoinLobby();
         }
+        
     }
 
-    public override void OnConnectedToMaster()
-    {
-        _loadingOnConnectingObj.SetActive(false);
 
-        //現在立っている部屋の情報を得る為にロビーに入る
-        if (PhotonNetwork.IsConnected)
-        {
-            PhotonNetwork.JoinLobby();
-        }
-    }
+
+
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
@@ -77,10 +85,34 @@ public class MatchingScene : MonoBehaviourPunCallbacks
         get { return _cachedRoomNames; }
     }
 
-
-    // Update is called once per frame
-    void Update()
+    public override void OnConnectedToMaster()
     {
+        //現在立っている部屋の情報を得る為にロビーに入る
+        if (PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.JoinLobby();
+        }
+    }
 
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        //本来は必要ないはずだが、ルームの参加に失敗すると、ロビーにいる状態なのに、
+        //PhotonNetwork.InLobby=false PhotonNetwork.NetworkClientState=ConnectingToMasterServerのように変数の値がバグるので、これを実行する。
+        PhotonNetwork.JoinLobby();
+    }
+
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        //本来は必要ないはずだが、ルームの作成に失敗すると、ルームの参加に失敗した時と同様のバグが起こるので、これを実行する。
+        PhotonNetwork.JoinLobby();
+    }
+
+    public void Update()
+    {
+        if (PhotonNetwork.InRoom && PhotonNetwork.CurrentRoom.PlayerCount >= 4 ) 
+        {
+            SceneManager.LoadScene(TransitBattleSceneName);
+        }
     }
 }
+

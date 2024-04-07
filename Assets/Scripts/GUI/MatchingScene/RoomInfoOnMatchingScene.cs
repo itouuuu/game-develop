@@ -12,15 +12,18 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
     public string OwnerNickName="";
     public string keyword;
     public int CurMemberNum;
+    public bool IsAbleToEnter;
+
     //以下4つが、上4つの変数に対応するテキストを表示する
     public TextMeshProUGUI roomNameTextMesh;
     public TextMeshProUGUI ownerTextMesh;
     public TextMeshProUGUI isSetKeywordTextMesh;
     public TextMeshProUGUI curMemberNumTextMesh;
     public Button button;
+    public Image image;
 
     public DispDescriptionOnHover dispDescription;
-    public GameObject waitingMatchingOverlayObj;
+    //public GameObject waitingMatchingOverlayObj;
     public KeywordInputOverLayOnMatchingScene keywordInputOverlay;
     
     // Start is called before the first frame update
@@ -39,11 +42,12 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
                 Debug.Log("wwwwww");
             }
         }
-
+        /*
         if (!waitingMatchingOverlayObj) 
         {
             waitingMatchingOverlayObj = GameObject.Find("WaitingOverlay");
         }
+        */
         if (!dispDescription) 
         {
             GameObject descriptionObj=GameObject.Find("Description");
@@ -87,22 +91,46 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
         OwnerID = roomInfo.OwnerID;
         keyword = roomInfo.keyword;
         CurMemberNum = roomInfo.CurMemberNum;
+        IsAbleToEnter = roomInfo.IsAbleToEnter;
         ResetTextMeshsText();
+        ResetButtonTransition();
     }
 
     //実際に表示される情報を、現在のRoomInfo/OwnerID/IsSetKeyword/CurMemberNumの値に合わせて変更する。
     public void ResetTextMeshsText() 
     {
-        roomNameTextMesh.text = RoomName;
+        roomNameTextMesh.text = RoomName.Substring(Consts.ROOM_MATCHING_NAME_PREFIX.Length);
         ownerTextMesh.text = $"{OwnerNickName}#{OwnerID}";
         isSetKeywordTextMesh.text = keyword!="" ? "あり" :"無し";
-        curMemberNumTextMesh.text =$"{CurMemberNum}/4";
-        dispDescription.DispMessage = $"部屋「{RoomName}」に参加する(残り{4-CurMemberNum}名)";
+        curMemberNumTextMesh.text = IsAbleToEnter?$"{CurMemberNum}/4":"Closed";
+        dispDescription.DispMessage = IsAbleToEnter?$"部屋「{RoomName}」に参加する(残り{4-CurMemberNum}名)":"この部屋には現在参加できません";
+    }
+
+    public void ResetButtonTransition() 
+    {
+        if (IsAbleToEnter)
+        {
+            button.transition = Selectable.Transition.ColorTint;
+            ColorBlock cb= button.colors;
+            cb.normalColor =new Color(1,1,1);
+            button.colors = cb;
+            image.color = new Color(1,1,1);
+
+        }
+        else 
+        {
+            button.transition = Selectable.Transition.None;
+            image.color = new Color(0.8f, 0.8f, 0.8f);
+        }
     }
 
     public void OnClicked() 
     {
-       
+        if (!IsAbleToEnter) 
+        {
+            return;
+        }
+
         if (keyword != "")//合言葉無しなら 
         {
             keywordInputOverlay.ActivateOverlay(RoomName, keyword);
@@ -110,7 +138,9 @@ public class RoomInfoOnMatchingScene : MonoBehaviour
         else 
         {
             PhotonNetwork.JoinRoom(RoomName);
-            waitingMatchingOverlayObj.SetActive(true);
+            //waitingMatchingOverlayObj.SetActive(true);
         }
     }
+
+
 }
