@@ -21,9 +21,11 @@ public class MatchingScene : MonoBehaviourPunCallbacks
         InRoom
     }
 
+
+
     private List<string> _cachedRoomNames=new List<string>();
 
-
+    public string TransitBattleSceneName="TestScene";
 
 
     // Start is called before the first frame update
@@ -107,6 +109,10 @@ public class MatchingScene : MonoBehaviourPunCallbacks
 
     public void Update()
     {
+        if (PhotonNetwork.InRoom && PhotonNetwork.CurrentRoom.PlayerCount >= 4 ) 
+        {
+            SceneManager.LoadScene(TransitBattleSceneName);
+        }
     }
 }
 
