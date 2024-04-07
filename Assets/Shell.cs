@@ -21,20 +21,6 @@ public class Shell : MonoBehaviour
         this.transform.position += (normShellVelocity * magicAttackSpeed * Time.deltaTime);
     }
 
-/*
-    void OnTriggerEnter(Collider other)
-    {
-        
-        if (other.gameObject.name == "MagicAttack(Clone)") {
-            // 衝突したら弾を削除する。
-            DestroyMagicAttack();
-        }
-        if (other.gameObject.name == "Wall") {
-            //壁と衝突したらisTriggerをオフにする(接触面の法線ベクトル検出のため)。
-            //this.GetComponent<Collider>().isTrigger = false;
-        }
-    }*/
-
     void OnCollisionEnter(Collision other)
     {
         Debug.Log(other.gameObject.name);
