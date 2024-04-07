@@ -43,7 +43,7 @@ public class ClientStateOverlay : MonoBehaviour
                 ClientStateOverlayTextMesh.text = "ロビーに接続中…";
                 break;
             case ClientState.Joining:
-                ClientStateOverlayTextMesh.text = $"部屋に参加中";
+                ClientStateOverlayTextMesh.text = $"部屋に参加中…";
                 break;
             case ClientState.Joined:
                 InRoomOverlayTextMesh.text = $"他の参加者を待っています…({PhotonNetwork.CurrentRoom.PlayerCount}/4)";
@@ -51,14 +51,18 @@ public class ClientStateOverlay : MonoBehaviour
 
 
         }
-        if (PhotonNetwork.NetworkClientState == ClientState.JoinedLobby)
+
+
+        //if (PhotonNetwork.NetworkClientState == ClientState.JoinedLobby)
+        if (PhotonNetwork.InLobby)
         {
             //ロビーにいるときは2つのStateを表すオーバーレイを非表示にする
             ClientStateOverlayObj.SetActive(false);
             InRoomOverlayObj.SetActive(false);
             ClientStateOverlayTextMesh.text = "サーバーに接続中…";
         }
-        else if (PhotonNetwork.NetworkClientState == ClientState.Joined)
+        //else if (PhotonNetwork.NetworkClientState == ClientState.Joined)
+        else if (PhotonNetwork.InRoom)
         {
             //ルームにいるときはInRoomOverlayを表示する。
             InRoomOverlayObj.SetActive(true);

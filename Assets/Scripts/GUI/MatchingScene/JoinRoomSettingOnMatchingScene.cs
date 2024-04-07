@@ -37,6 +37,7 @@ public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
     [SerializeField] private Transform viewportContent;
     public MessageStackDescription messageStackDescription;
     public Button UpdateRoomListButton;
+    public GameObject NoRoomNowObj;
     //public GameObject matchingWaitingOverlayObj;
 
 
@@ -60,9 +61,23 @@ public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
         ((RectTransform)viewportContent).sizeDelta = contentScale;
     }
 
+    public void DispNoRoomNowIfSo() 
+    {
+        if (_roomInfos.Count == 0)
+        {
+            NoRoomNowObj.SetActive(true);
+        }
+        else 
+        {
+            NoRoomNowObj.SetActive(false);
+        }
+    }
+
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
+        Debug.Log($"PhotonNetwork.InLobby:{PhotonNetwork.InLobby}");
+
         Debug.Log($"ルームリストが更新されました:{roomList.Count}");
 
 
@@ -111,6 +126,7 @@ public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
             }
         }
         ResizeViewPortContent();
+        DispNoRoomNowIfSo();
     }
 
     //_roomInfosから、閉じている部屋を除外。対応するゲームオブジェクトも削除
@@ -134,6 +150,7 @@ public class JoinRoomSettingOnMatchingScene : MonoBehaviourPunCallbacks
             }
             _roomInfos.RemoveAt(removedInfosIndexes[i]);//部屋の情報を格納しているリストからも消す
         }
-
+        ResizeViewPortContent();
+        DispNoRoomNowIfSo();
     }
 }

@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class MatchingScene : MonoBehaviourPunCallbacks
 {
@@ -28,7 +29,7 @@ public class MatchingScene : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-
+        
         //サーバーに繋がっていないなら
         if (!PhotonNetwork.IsConnected)
         {
@@ -54,15 +55,9 @@ public class MatchingScene : MonoBehaviourPunCallbacks
         
     }
 
-    public override void OnConnectedToMaster()
-    {
 
-        //現在立っている部屋の情報を得る為にロビーに入る
-        if (PhotonNetwork.IsConnected)
-        {
-            PhotonNetwork.JoinLobby();
-        }
-    }
+
+
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
@@ -88,6 +83,30 @@ public class MatchingScene : MonoBehaviourPunCallbacks
         get { return _cachedRoomNames; }
     }
 
+    public override void OnConnectedToMaster()
+    {
+        //現在立っている部屋の情報を得る為にロビーに入る
+        if (PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.JoinLobby();
+        }
+    }
 
-    
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        //本来は必要ないはずだが、ルームの参加に失敗すると、ロビーにいる状態なのに、
+        //PhotonNetwork.InLobby=false PhotonNetwork.NetworkClientState=ConnectingToMasterServerのように変数の値がバグるので、これを実行する。
+        PhotonNetwork.JoinLobby();
+    }
+
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        //本来は必要ないはずだが、ルームの作成に失敗すると、ルームの参加に失敗した時と同様のバグが起こるので、これを実行する。
+        PhotonNetwork.JoinLobby();
+    }
+
+    public void Update()
+    {
+    }
 }
+
