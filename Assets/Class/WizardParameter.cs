@@ -1,3 +1,9 @@
+/*
+
+
+
+*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +23,7 @@ public abstract class WizardParameter : WizardPlayerStatus
     private static float hitInvincibleTime = 3.0f;
     //無敵時間の点滅間隔
     private static float transparentTime = 0.1f;
+    //プレイヤーのマテリアル
     private Renderer playerMaterial;
 
 
@@ -28,15 +35,16 @@ public abstract class WizardParameter : WizardPlayerStatus
         mainCamera = Camera.main;
         //オブジェクトの色を用意したMaterialの色に変更する
         playerColor[0] = (Material)Resources.Load ("redMaterial");
-        playerMaterial = gameObject.GetComponent<Renderer>();
-        playerMaterial.material.color = playerColor[0].color;
 
-        Debug.Log("wizadparametar awake");
+        //プレイヤーマテリアルの取得
+        playerMaterial = gameObject.GetComponent<Renderer>();
+        //色の設定
+        playerMaterial.material.color = playerColor[0].color;
     }
     
     //キャラクターの移動
     //返り値が移動する方向のベクトル
-    public Vector3 MoveTank(){
+    public Vector3 MovePlayerWizard(){
             Vector3 inputMove = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
             //斜めの距離が長くなるのを防ぐため正規化しておく
 	        return inputMove.normalized * GetMoveWizardSpeed();
@@ -91,7 +99,11 @@ public abstract class WizardParameter : WizardPlayerStatus
             return x0 + ((h - Vector3.Dot(n, x0)) / (Vector3.Dot(n, m))) * m;
     }
 
-    //被弾時の点滅を実行する
+    public void InitializeHitpoint(){
+
+    }
+
+    //ダメージを受けた際に実行される関数
     public void OnPlayerDameged(){
         //被弾時の無敵時間だったら実行しない
         if(characterState == CHARACTERSTATE.Damaged){
@@ -107,7 +119,8 @@ public abstract class WizardParameter : WizardPlayerStatus
         StartCoroutine(BlinkPlayer());
     }
 
-    IEnumerator BlinkPlayer()
+    //一定間隔で点滅を行うコルーチン
+    private IEnumerator BlinkPlayer()
 	{
 		characterState = CHARACTERSTATE.Damaged;
         bool isTransparent = false;
@@ -137,8 +150,8 @@ public abstract class WizardParameter : WizardPlayerStatus
 		yield break;
 	}
 
-    //点滅時のマテリアルの切り替えを行う
-    void SwitchBlinkMaterial(bool isTransparent)
+    //点滅時のマテリアルの切り替えを行う(trueならalpha=1,falseならalpha=0)
+    private void SwitchBlinkMaterial(bool isTransparent)
 	{
         //trueなら透明(alpha=0)にする。
         if(isTransparent == true && playerMaterial.sharedMaterial.color.a == 0){

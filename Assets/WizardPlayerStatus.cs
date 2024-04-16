@@ -1,3 +1,9 @@
+/*
+すべてのプレイヤーの基礎ステータスとなる値などが書いてある。
+これらの値は関数GetOO,SetOOによって取得できる。
+このファイル内の値は基本的に変更できないようにする。
+ギアによる能力の変化はここではなくWizardParameterの方で行う。
+*/
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,7 +29,7 @@ public class WizardPlayerStatus : MonoBehaviourPunCallbacks
     //プレイヤーネーム
     string playerName = "Test";
     //プレイヤーのライフ
-    private int hitPoint;
+    private int hitPoint = 3;
     //プレイヤーの移動速度
     private float moveWizardSpeed = 4.0f;
     //魔法弾の最大存在数
@@ -45,6 +51,8 @@ public class WizardPlayerStatus : MonoBehaviourPunCallbacks
     //罠の設置者(id?)
     private string magicTrapID = "";
 
+
+    //プレイヤー関連
     //プレイヤー名
     public void SetPlayerName(string newPlayerName){
         this.playerName = newPlayerName;
@@ -69,7 +77,8 @@ public class WizardPlayerStatus : MonoBehaviourPunCallbacks
         return moveWizardSpeed;
     }
 
-    //魔法弾
+    //魔法弾関連
+    //最大魔法弾数
     public void SetMaxMagicAttack(int newMaxMagicAttack){
         this.maxMagicAttack = newMaxMagicAttack;
     }
@@ -77,6 +86,7 @@ public class WizardPlayerStatus : MonoBehaviourPunCallbacks
         return maxMagicAttack;
     }
 
+    //現在存在する魔法弾数
     public void SetCountMagicAttack(int newCountMagicAttack){
         this.countMagicAttack = newCountMagicAttack;
     }
@@ -84,6 +94,7 @@ public class WizardPlayerStatus : MonoBehaviourPunCallbacks
         return countMagicAttack;
     }
 
+    //魔法弾の速度
     public void SetMagicAttackSpeed(int newMagicAttackSpeed){
         this.magicAttackSpeed = newMagicAttackSpeed;
     }
@@ -91,6 +102,7 @@ public class WizardPlayerStatus : MonoBehaviourPunCallbacks
         return magicAttackSpeed;
     }
 
+    //魔法弾の最大反射回数
     public void SetMagicAttackReflectNum(int newMagicAttackReflectNum){
         this.magicAttackReflectNum = newMagicAttackReflectNum;
     }
@@ -98,7 +110,8 @@ public class WizardPlayerStatus : MonoBehaviourPunCallbacks
         return magicAttackReflectNum;
     }
 
-    //罠
+    //罠関連
+    //罠の最大設置数
     public void SetMaxMagicTrap(int newMaxMagicTrap){
         this.maxMagicTrap = newMaxMagicTrap;
     }
@@ -106,6 +119,7 @@ public class WizardPlayerStatus : MonoBehaviourPunCallbacks
         return maxMagicTrap;
     }
 
+    //罠の現在設置済みの数
     public void SetCountMagicTrap(int newCountMagicTrap){
         this.countMagicTrap = newCountMagicTrap;
     }
@@ -113,6 +127,7 @@ public class WizardPlayerStatus : MonoBehaviourPunCallbacks
         return countMagicTrap;
     }
 
+    //罠の爆発距離半径
     public void SetMagicTrapExplosionRadius(float newMagicTrapExplosionRadius){
         this.magicTrapExplosionRadius = newMagicTrapExplosionRadius;
     }
@@ -120,6 +135,7 @@ public class WizardPlayerStatus : MonoBehaviourPunCallbacks
         return magicTrapExplosionRadius;
     }
 
+    //罠の探知距離半径
     public void SetMagicTrapDetectionRadius(float newMagicTrapDetectionRadius){
         this.magicTrapDetectionRadius = newMagicTrapDetectionRadius;
     }
