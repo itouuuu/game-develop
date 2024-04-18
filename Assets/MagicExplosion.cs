@@ -6,19 +6,12 @@ using Photon.Realtime;
 
 public class MagicExplosion : WizardPlayerStatus
 {
-    
-
 
     // Start is called before the first frame update
     void Start()
     {
         InitializeMagicExplosionParameters();
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        StartCoroutine(BlinkMagicTrap());
     }
 
     //生成時に呼び出され初期化を行う
@@ -27,11 +20,15 @@ public class MagicExplosion : WizardPlayerStatus
         this.transform.localScale = new Vector3(explosionRadius, explosionRadius, explosionRadius);
     }
 
-    //爆発時に呼ばれる関数
-    private void ExplosionMagicTrap(){
-        GameObject IMagicExplosion = PhotonNetwork.Instantiate("Prefabs/MagicExplosion", this.transform.position, Quaternion.identity);
+    //一定間隔で点滅を行うコルーチン
+    private IEnumerator BlinkMagicTrap()
+	{
+        //少し待機する。
+        yield return 2.0f;
         DeleteMagicExplosion();
-    }
+		yield break;
+	}
+
 
     private void DeleteMagicExplosion(){
         Destroy(this.gameObject);
