@@ -7,6 +7,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 
@@ -17,6 +18,12 @@ public abstract class WizardParameter : WizardPlayerStatus
     private Camera mainCamera;
     //ステージの床
     private GameObject land;
+    //canvasを
+    private GameObject canvas;
+    //ライフの表示
+    private GameObject[] hitPointMarkArray = new GameObject[5];
+    //現在の残りライフ
+    private int currentHitPoint = 0;
     //プレイヤーカラー
     private Material[] playerColor = new Material[8];
     //被弾時の無敵時間
@@ -40,6 +47,10 @@ public abstract class WizardParameter : WizardPlayerStatus
         playerMaterial = gameObject.GetComponent<Renderer>();
         //色の設定
         playerMaterial.material.color = playerColor[0].color;
+
+        canvas = GameObject.Find("Canvas");
+        //HPの初期化。
+        InitializeHitpoint();
     }
     
     //キャラクターの移動
@@ -100,8 +111,25 @@ public abstract class WizardParameter : WizardPlayerStatus
     }
 
     public void InitializeHitpoint(){
-
+        for(currentHitPoint = 0;currentHitPoint < GetHitPoint();currentHitPoint++){
+            //UIを生成
+            hitPointMarkArray[currentHitPoint] = PhotonNetwork.Instantiate("Prefabs/HitPointHeart",  new Vector3(-900 ,500 - (100 * currentHitPoint),0), Quaternion.identity);
+            hitPointMarkArray[currentHitPoint].transform.SetParent(canvas.transform, false);
+        }
+            
     }
+
+    public void UpdateHitPoint(){
+        //ライフの減少。
+        currentHitPoint--;
+        SetHitPoint(currentHitPoint);
+
+        Destroy(hitPointMarkArray[currentHitPoint]);
+
+        return;    
+    }
+
+    
 
     //ダメージを受けた際に実行される関数
     public void OnPlayerDameged(){
@@ -110,8 +138,10 @@ public abstract class WizardParameter : WizardPlayerStatus
             return ;
         }
         //ライフを減らす処理
-        SetHitPoint(GetHitPoint() - 1);
-        if(GetHitPoint() == 0){
+        UpdateHitPoint();
+
+        //ライフが0になったらゲームオーバー。
+        if(currentHitPoint == 0){
             characterState = CHARACTERSTATE.GameOver;
             return ;
         }
