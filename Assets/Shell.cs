@@ -26,11 +26,7 @@ public class Shell : MonoBehaviourPunCallbacks
     void OnCollisionEnter(Collision other)
     {
 
-        if (other.gameObject.name == "MagicAttack(Clone)") {
-            // 衝突したら弾を削除する。
-            DeleteMagicAttack();
-        }
-        else if (other.gameObject.name == "PlayerWizard(Clone)") {
+         if (other.gameObject.tag == "Player") {
             // 衝突したら弾を削除する。
             DeleteMagicAttack();
         }
@@ -38,6 +34,15 @@ public class Shell : MonoBehaviourPunCallbacks
             //反射を行う処理。
             Reflect(other);
         }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        //罠と衝突したら弾を削除する。
+        if (other.gameObject.name == "MagicTrap(Clone)") {
+            DeleteMagicAttack();
+        } 
+        
     }
 
     //魔法弾生成時に呼び出され速度と反射回数が与えられる
@@ -58,10 +63,12 @@ public class Shell : MonoBehaviourPunCallbacks
 
     //壁に反射した際に呼ばれる関数
     void Reflect(Collision wall){
+        //もう反syができない場合。
         if(magicAttackReflectNum <= 0){
             //砲弾の終了
             DeleteMagicAttack();
         }
+        //反射回数を減らす。
         magicAttackReflectNum--;
 
         // Triggerで接触したオブジェクトは

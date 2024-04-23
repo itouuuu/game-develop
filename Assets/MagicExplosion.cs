@@ -24,7 +24,7 @@ public class MagicExplosion : WizardPlayerStatus
     private IEnumerator BlinkMagicTrap()
 	{
         //少し待機する。
-        yield return 2.0f;
+        yield return new WaitForSeconds(1.0f);
         DeleteMagicExplosion();
 		yield break;
 	}

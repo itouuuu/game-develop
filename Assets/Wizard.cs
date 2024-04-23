@@ -32,9 +32,19 @@ public class Wizard : WizardParameter
 
     void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.name == "MagicAttack(Clone)") {
-            //魔法弾と衝突したら被弾判定を行う。
+        if (other.gameObject.tag == "DamageObject") {
+            //ダメージオブジェクトと衝突したら被弾判定を行う。
              OnPlayerDameged();
         } 
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "DamageObject") {
+            //ダメージオブジェクトと衝突したら被弾判定を行う。
+             OnPlayerDameged();
+        } 
+        
+    }
+
 }

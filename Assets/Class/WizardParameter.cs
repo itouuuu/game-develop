@@ -123,8 +123,10 @@ public abstract class WizardParameter : WizardPlayerStatus
         //ライフの減少。
         currentHitPoint--;
         SetHitPoint(currentHitPoint);
-
-        Destroy(hitPointMarkArray[currentHitPoint]);
+        //UIのライフを一つ削除する。
+        if(currentHitPoint >= 0){
+            Destroy(hitPointMarkArray[currentHitPoint]);
+        }
 
         return;    
     }

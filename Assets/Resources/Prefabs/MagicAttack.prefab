@@ -16,9 +16,9 @@ GameObject:
   - component: {fileID: 5094756916144961026}
   - component: {fileID: -5332238007178612582}
   - component: {fileID: -8568448591287401312}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MagicAttack
-  m_TagString: Untagged
+  m_TagString: DamageObject
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
