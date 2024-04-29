@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class MagicExplosion : WizardPlayerStatus
+public class MagicExplosion : WizardBaseStatusParameters
 {
 
     // Start is called before the first frame update

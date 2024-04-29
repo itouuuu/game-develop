@@ -1,5 +1,7 @@
 /*
-
+弾を任意の場所に飛ばすた目の処理もここに書く
+魔法弾や罠の生成などの関数はここに記載する
+ギアによるステータス変更を行った値を保存する
 
 
 */
@@ -11,7 +13,7 @@ using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 
-public abstract class WizardParameter : WizardPlayerStatus
+public abstract class WizardParameter : WizardBaseStatusParameters
 {
     public CHARACTERSTATE characterState = CHARACTERSTATE.Normal;
     //プレイヤーのカメラ
@@ -33,6 +35,29 @@ public abstract class WizardParameter : WizardPlayerStatus
     //プレイヤーのマテリアル
     private Renderer playerMaterial;
 
+    //プレイヤーのライフなどのステータスパラメータ変数。
+        //プレイヤーの最大ライフ
+        private int maxHitPoint = 0;
+        //プレイヤーの移動速度
+        private float moveWizardSpeed = 0.0f;
+        //魔法弾の最大存在数
+        private int maxMagicAttack = 0;
+        //魔法弾の現在存在数
+        private int countMagicAttack = 0;
+        //魔法弾の速度
+        private float magicAttackSpeed = 0.0f;
+        //魔法弾の反射回数
+        private int magicAttackReflectNum = 0;
+        //罠の最大設置数
+        private int maxMagicTrap = 0;
+        //罠の現在設置数
+        private int countMagicTrap = 0;
+        //罠の爆発半径
+        private float magicTrapExplosionRadius = 0.0f;
+        //罠の探知半径
+        private float magicTrapDetectionRadius = 0.0f;
+    
+
 
     private void Awake()
     {
@@ -51,6 +76,7 @@ public abstract class WizardParameter : WizardPlayerStatus
         canvas = GameObject.Find("Canvas");
         //HPの初期化。
         InitializeHitpoint();
+        InitializeWizardParameter();
     }
     
     //キャラクターの移動
@@ -72,7 +98,7 @@ public abstract class WizardParameter : WizardPlayerStatus
             //プレハブを指定位置(自分の座標+マウス方向の少し前方)に生成
             GameObject Ishell = PhotonNetwork.Instantiate("Prefabs/MagicAttack",  playerPosition + (mouseClickPosition - playerPosition).normalized/1.0f, Quaternion.identity);
             //shellTargetPositionを引数としてshellの中のスクリプトの関数を呼び出す。
-            Ishell.GetComponent<Shell>().InitializeMagicAttackParameters(GetMagicAttackSpeed(),GetMagicAttackReflectNum());
+            Ishell.GetComponent<Shell>().InitializeMagicAttackParameters(magicAttackSpeed,magicAttackReflectNum);
             Ishell.GetComponent<Shell>().SetImpactPosition(mouseClickPosition);
         }
     }
@@ -111,7 +137,7 @@ public abstract class WizardParameter : WizardPlayerStatus
     }
 
     public void InitializeHitpoint(){
-        for(currentHitPoint = 0;currentHitPoint < GetHitPoint();currentHitPoint++){
+        for(currentHitPoint = 0;currentHitPoint < GetMaxHitPoint();currentHitPoint++){
             //UIを生成
             hitPointMarkArray[currentHitPoint] = PhotonNetwork.Instantiate("Prefabs/HitPointHeart",  new Vector3(-900 ,500 - (100 * currentHitPoint),0), Quaternion.identity);
             hitPointMarkArray[currentHitPoint].transform.SetParent(canvas.transform, false);
@@ -122,7 +148,6 @@ public abstract class WizardParameter : WizardPlayerStatus
     public void UpdateHitPoint(){
         //ライフの減少。
         currentHitPoint--;
-        SetHitPoint(currentHitPoint);
         //UIのライフを一つ削除する。
         if(currentHitPoint >= 0){
             Destroy(hitPointMarkArray[currentHitPoint]);
@@ -196,6 +221,54 @@ public abstract class WizardParameter : WizardPlayerStatus
         return ;
 	}
 
+    
+        //ギアによるステータスの加算乗算するための値を格納する変数。
+        //基礎ステータスにaddは加算、multiplyは乗算する。
+        
+            //プレイヤーライフ増加ギアパワー。
+            private int addGearPower_maxHitPoint = 0;
+            //プレイヤーの移動速度増加ギアパワー。
+            private float multiplyGearPower_moveWizardSpeed = 1.0f;
+            //魔法弾の最大存在数増加ギアパワー。
+            private int addGearPower_maxMagicAttack = 0;
+            //魔法弾の速度増加ギアパワー。
+            private float multiplyGearPower_magicAttackSpeed = 1.0f;
+            //魔法弾の反射回数増加ギアパワー。
+            private int addGearPower_magicAttackReflectNum = 1;
+            //罠の最大設置数増加ギアパワー。
+            private int addGearPower_maxMagicTrap = 0;
+            //罠の爆発半径拡大ギアパワー。
+            private float multiplyGearPower_magicTrapExplosionRadius = 1.0f;
+            //罠の探知半径拡大ギアパワー。
+            private float multiplyGearPower_magicTrapDetectionRadius = 1.0f;
+        
+    //ギアパワーを含めたパラメータの初期化。
+    private void  InitializeWizardParameter()
+    {
+        //プレイヤーのライフ
+        maxHitPoint = GetMaxHitPoint() + addGearPower_maxHitPoint;
+        //プレイヤーの移動速度
+        moveWizardSpeed = GetMoveWizardSpeed() * multiplyGearPower_moveWizardSpeed;
+        //魔法弾の最大存在数
+        maxMagicAttack = GetMaxMagicAttack() + addGearPower_maxMagicAttack;
+        //魔法弾の現在存在数
+        countMagicAttack = 0;
+        //魔法弾の速度
+        magicAttackSpeed = GetMagicAttackSpeed() * multiplyGearPower_magicAttackSpeed;
+        //魔法弾の反射回数
+        magicAttackReflectNum = GetMagicAttackReflectNum() + addGearPower_magicAttackReflectNum;
+        //罠の最大設置数
+        maxMagicTrap = GetMaxMagicTrap() + addGearPower_maxMagicTrap;
+        //罠の現在設置数
+        countMagicTrap = 0;
+        //罠の爆発半径
+        magicTrapExplosionRadius = GetMagicTrapExplosionRadius() * multiplyGearPower_magicTrapExplosionRadius;
+        //罠の探知半径
+        magicTrapDetectionRadius = GetMagicTrapDetectionRadius() * multiplyGearPower_magicTrapDetectionRadius;
+    }
+    
+    
+    
 
     
 }

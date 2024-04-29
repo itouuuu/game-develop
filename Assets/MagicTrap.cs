@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class MagicTrap : WizardPlayerStatus
+public class MagicTrap : WizardBaseStatusParameters
 {
     //罠の設置者ID
     //private string magicTrapID;
