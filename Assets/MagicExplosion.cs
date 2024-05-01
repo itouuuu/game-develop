@@ -4,20 +4,19 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class MagicExplosion : WizardBaseStatusParameters
+public class MagicExplosion : MagicTrap
 {
 
     // Start is called before the first frame update
     void Start()
     {
-        InitializeMagicExplosionParameters();
+        //InitializeMagicExplosionParameters();
         StartCoroutine(BlinkMagicTrap());
     }
 
     //生成時に呼び出され初期化を行う
-    private void InitializeMagicExplosionParameters(){
-        float explosionRadius = GetMagicTrapExplosionRadius();
-        this.transform.localScale = new Vector3(explosionRadius, explosionRadius, explosionRadius);
+    public void SetMagicExplosionRadius(float magicTrapExplosionRadius){
+        this.transform.localScale = new Vector3(magicTrapExplosionRadius, magicTrapExplosionRadius, magicTrapExplosionRadius);
     }
 
     //一定間隔で点滅を行うコルーチン

@@ -14,12 +14,14 @@ public class MagicTrapDetectPlayer : MagicTrap
     //爆発前の点滅に使用するマテリアル。
     [SerializeField] Material[] magicTrapMaterialArray = new Material[2];
 
+    private float magicTrapDetectionRadius = 0;
     void Start()
     {
         //マテリアルの取得
         magicTrapMaterial = magicTrapObject.GetComponent<MeshRenderer>().material;
         capsuleCol = GetComponent<CapsuleCollider>();
-        InitializeMagicTrapParameters();
+        
+        capsuleCol.radius = magicTrapDetectionRadius;
     }
 
     // Update is called once per frame
@@ -34,16 +36,16 @@ public class MagicTrapDetectPlayer : MagicTrap
             Debug.Log("プレイヤーが探知範囲に入りました");
             //点滅し色変化し数秒後に爆発する処理。開始。
             StartCoroutine(BlinkMagicTrap());
-            //一度爆破う待機状態になったらコライダーは消す。
+            //一度爆破待機状態になったらコライダーは消す。
             capsuleCol.enabled = false;
         }
         
     }
 
     //罠生成時に呼び出され初期化を行う
-    private void InitializeMagicTrapParameters(){
+    public void SetMagicTrapParameters(float setMagicTrapDetectionRadius){
         //コライダーの半径を探知半径にする。
-        capsuleCol.radius = GetMagicTrapDetectionRadius();
+        magicTrapDetectionRadius = setMagicTrapDetectionRadius;
     }
 
     //一定間隔で点滅を行うコルーチン

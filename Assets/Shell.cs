@@ -34,6 +34,10 @@ public class Shell : MonoBehaviourPunCallbacks
             //反射を行う処理。
             Reflect(other);
         }
+        else if (other.gameObject.name == "MagicAttack(Clone)") {
+            // 衝突したら弾を削除する。
+            DeleteMagicAttack();
+        }
     }
 
     void OnTriggerEnter(Collider other)

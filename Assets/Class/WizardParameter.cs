@@ -84,7 +84,7 @@ public abstract class WizardParameter : WizardBaseStatusParameters
     public Vector3 MovePlayerWizard(){
             Vector3 inputMove = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
             //斜めの距離が長くなるのを防ぐため正規化しておく
-	        return inputMove.normalized * GetMoveWizardSpeed();
+	        return inputMove.normalized * moveWizardSpeed;
     }
 
 
@@ -109,7 +109,12 @@ public abstract class WizardParameter : WizardBaseStatusParameters
         {
             //プレハブを指定位置に生成
             GameObject IMagicTrap = PhotonNetwork.Instantiate("Prefabs/MagicTrap", playerPosition, Quaternion.identity);
-            //IMagicTrap.GetComponent<MagicTrap>().InitializeMagicTrapParameters(GetPlayerName(),GetMagicTrapExplosionRadius(),GetMagicTrapDetectionRadius());
+            //Awakeの後、Startのタイミングより前に以下は実行される。
+            IMagicTrap.GetComponent<MagicTrap>().InitializeMagicTrapExplosionRadius(magicTrapExplosionRadius);
+            //MagicTrapの子オブジェクトにアタッチされているMagicTrapDetectPlayerに探知範囲の変数を渡す。
+            //後々トラップの爆発時間も渡す予定。
+            IMagicTrap.transform.Find("MagicTrapDetectObject").gameObject.GetComponent<MagicTrapDetectPlayer>().SetMagicTrapParameters(magicTrapDetectionRadius);
+            
         }
     }
 
@@ -136,8 +141,9 @@ public abstract class WizardParameter : WizardBaseStatusParameters
             return x0 + ((h - Vector3.Dot(n, x0)) / (Vector3.Dot(n, m))) * m;
     }
 
+    //ライフの初期化とUIの生成を行う。
     public void InitializeHitpoint(){
-        for(currentHitPoint = 0;currentHitPoint < GetMaxHitPoint();currentHitPoint++){
+        for(currentHitPoint = 0;currentHitPoint < GetBase_MaxHitPoint();currentHitPoint++){
             //UIを生成
             hitPointMarkArray[currentHitPoint] = PhotonNetwork.Instantiate("Prefabs/HitPointHeart",  new Vector3(-900 ,500 - (100 * currentHitPoint),0), Quaternion.identity);
             hitPointMarkArray[currentHitPoint].transform.SetParent(canvas.transform, false);
@@ -145,6 +151,7 @@ public abstract class WizardParameter : WizardBaseStatusParameters
             
     }
 
+    //ライフの更新(減少もセット、UIの更新だけにしてライフ増減は別の関数にする？)。
     public void UpdateHitPoint(){
         //ライフの減少。
         currentHitPoint--;
@@ -153,7 +160,7 @@ public abstract class WizardParameter : WizardBaseStatusParameters
             Destroy(hitPointMarkArray[currentHitPoint]);
         }
 
-        return;    
+        return;
     }
 
     
@@ -246,27 +253,26 @@ public abstract class WizardParameter : WizardBaseStatusParameters
     private void  InitializeWizardParameter()
     {
         //プレイヤーのライフ
-        maxHitPoint = GetMaxHitPoint() + addGearPower_maxHitPoint;
+        maxHitPoint = GetBase_MaxHitPoint() + addGearPower_maxHitPoint;
         //プレイヤーの移動速度
-        moveWizardSpeed = GetMoveWizardSpeed() * multiplyGearPower_moveWizardSpeed;
+        moveWizardSpeed = GetBase_MoveWizardSpeed() * multiplyGearPower_moveWizardSpeed;
         //魔法弾の最大存在数
-        maxMagicAttack = GetMaxMagicAttack() + addGearPower_maxMagicAttack;
+        maxMagicAttack = GetBase_MaxMagicAttack() + addGearPower_maxMagicAttack;
         //魔法弾の現在存在数
         countMagicAttack = 0;
         //魔法弾の速度
-        magicAttackSpeed = GetMagicAttackSpeed() * multiplyGearPower_magicAttackSpeed;
+        magicAttackSpeed = GetBase_MagicAttackSpeed() * multiplyGearPower_magicAttackSpeed;
         //魔法弾の反射回数
-        magicAttackReflectNum = GetMagicAttackReflectNum() + addGearPower_magicAttackReflectNum;
+        magicAttackReflectNum = GetBase_MagicAttackReflectNum() + addGearPower_magicAttackReflectNum;
         //罠の最大設置数
-        maxMagicTrap = GetMaxMagicTrap() + addGearPower_maxMagicTrap;
+        maxMagicTrap = GetBase_MaxMagicTrap() + addGearPower_maxMagicTrap;
         //罠の現在設置数
         countMagicTrap = 0;
         //罠の爆発半径
-        magicTrapExplosionRadius = GetMagicTrapExplosionRadius() * multiplyGearPower_magicTrapExplosionRadius;
+        magicTrapExplosionRadius = GetBase_MagicTrapExplosionRadius() * multiplyGearPower_magicTrapExplosionRadius;
         //罠の探知半径
-        magicTrapDetectionRadius = GetMagicTrapDetectionRadius() * multiplyGearPower_magicTrapDetectionRadius;
+        magicTrapDetectionRadius = GetBase_MagicTrapDetectionRadius() * multiplyGearPower_magicTrapDetectionRadius;
     }
-    
     
     
 

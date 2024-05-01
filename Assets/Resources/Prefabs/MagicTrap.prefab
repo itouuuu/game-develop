@@ -37,7 +37,7 @@ Transform:
   m_Children:
   - {fileID: 1510722298503510959}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4772907954323667794
 MeshFilter:
@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 550c10ec994c0f84585ce393f65332d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterState: 1
 --- !u!136 &289501209139381068
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -203,7 +204,7 @@ GameObject:
   - component: {fileID: 7868004553070690155}
   - component: {fileID: 188018409780109638}
   m_Layer: 7
-  m_Name: GameObject
+  m_Name: MagicTrapDetectObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -286,6 +287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fccb294576ace754b93828929e105092, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterState: 1
   magicTrapObject: {fileID: 400270313741995720}
   magicTrapMaterialArray:
   - {fileID: 2100000, guid: 90c46cf9e244b4e4ca0cee1c9edab7c8, type: 2}

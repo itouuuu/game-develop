@@ -41,9 +41,9 @@ public class WizardBaseStatusParameters : MonoBehaviourPunCallbacks
     //罠の最大設置数
     private int baseStatus_maxMagicTrap = 1;
     //罠の爆発半径
-    private float baseStatus_magicTrapExplosionRadius = 2;
+    private float baseStatus_magicTrapExplosionRadius = 2.0f;
     //罠の探知半径
-    private float baseStatus_magicTrapDetectionRadius = 2;
+    private float baseStatus_magicTrapDetectionRadius = 2.0f;
     //罠の設置者(id?)
     private string magicTrapID = "";
 
@@ -58,45 +58,45 @@ public class WizardBaseStatusParameters : MonoBehaviourPunCallbacks
     }
 
     //ヒットポイント
-    public int GetMaxHitPoint(){
+    public int GetBase_MaxHitPoint(){
         return baseStatus_maxHitPoint;
     }
 
     //プレイヤーの移動速度
-    public float GetMoveWizardSpeed(){
+    public float GetBase_MoveWizardSpeed(){
         return baseStatus_moveWizardSpeed;
     }
 
     //魔法弾関連
     //最大魔法弾数
-    public int GetMaxMagicAttack(){
+    public int GetBase_MaxMagicAttack(){
         return baseStatus_maxMagicAttack;
     }
 
 
     //魔法弾の速度
-    public float GetMagicAttackSpeed(){
+    public float GetBase_MagicAttackSpeed(){
         return baseStatus_magicAttackSpeed;
     }
 
     //魔法弾の最大反射回数
-    public int GetMagicAttackReflectNum(){
+    public int GetBase_MagicAttackReflectNum(){
         return baseStatus_magicAttackReflectNum;
     }
 
     //罠関連
     //罠の最大設置数
-    public int GetMaxMagicTrap(){
+    public int GetBase_MaxMagicTrap(){
         return baseStatus_maxMagicTrap;
     }
 
     //罠の爆発距離半径
-    public float GetMagicTrapExplosionRadius(){
+    public float GetBase_MagicTrapExplosionRadius(){
         return baseStatus_magicTrapExplosionRadius;
     }
 
     //罠の探知距離半径
-    public float GetMagicTrapDetectionRadius(){
+    public float GetBase_MagicTrapDetectionRadius(){
         return baseStatus_magicTrapDetectionRadius;
         
     }
