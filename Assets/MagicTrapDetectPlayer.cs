@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class MagicTrapDetectPlayer : MagicTrap
+public class MagicTrapDetectPlayer : MonoBehaviourPunCallbacks
 {
     //プレイヤーを探知するためのコライダー。
     private CapsuleCollider capsuleCol;
@@ -32,7 +34,7 @@ public class MagicTrapDetectPlayer : MagicTrap
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player"){
+        if(other.gameObject.tag == "Player" && capsuleCol.enabled){
             Debug.Log("プレイヤーが探知範囲に入りました");
             //点滅し色変化し数秒後に爆発する処理。開始。
             StartCoroutine(BlinkMagicTrap());
@@ -43,13 +45,13 @@ public class MagicTrapDetectPlayer : MagicTrap
     }
 
     //罠生成時に呼び出され初期化を行う
-    public void SetMagicTrapParameters(float setMagicTrapDetectionRadius){
+    public void InitializeMagicTrapParameters(float setMagicTrapDetectionRadius){
         //コライダーの半径を探知半径にする。
         magicTrapDetectionRadius = setMagicTrapDetectionRadius;
     }
 
     //一定間隔で点滅を行うコルーチン
-    public IEnumerator BlinkMagicTrap()
+    private IEnumerator BlinkMagicTrap()
 	{
         //点滅の残り時間。
 		float blinkedTotalTime = 5.0f;
@@ -71,8 +73,9 @@ public class MagicTrapDetectPlayer : MagicTrap
             //1フレーム待機
             yield return null;
 		}
-        //点滅終了後は爆発する。
-        ExplosionMagicTrap();
+        //点滅終了後は親オブジェクトにアタッチされているスクリプトの関数を呼び出し爆発する。
+        transform.parent.gameObject.GetComponent<MagicTrap>().ExplosionMagicTrap();
+        Destroy(this.gameObject);
 		yield break;
 	}
 

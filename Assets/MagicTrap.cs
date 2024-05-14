@@ -36,5 +36,6 @@ public class MagicTrap : MonoBehaviourPunCallbacks
 
     private void DeleteMagicTrap(){
         Destroy(this.gameObject);
+        Debug.Log("罠は壊れました");
     }
 }

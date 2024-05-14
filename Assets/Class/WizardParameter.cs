@@ -113,7 +113,7 @@ public abstract class WizardParameter : WizardBaseStatusParameters
             IMagicTrap.GetComponent<MagicTrap>().InitializeMagicTrapExplosionRadius(magicTrapExplosionRadius);
             //MagicTrapの子オブジェクトにアタッチされているMagicTrapDetectPlayerに探知範囲の変数を渡す。
             //後々トラップの爆発時間も渡す予定。
-            IMagicTrap.transform.Find("MagicTrapDetectObject").gameObject.GetComponent<MagicTrapDetectPlayer>().SetMagicTrapParameters(magicTrapDetectionRadius);
+            IMagicTrap.transform.Find("MagicTrapDetectObject").gameObject.GetComponent<MagicTrapDetectPlayer>().InitializeMagicTrapParameters(magicTrapDetectionRadius);
             
         }
     }
